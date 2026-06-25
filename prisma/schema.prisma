@@ -18,17 +18,16 @@ enum TransactionType {
 }
 
 enum PaymentMethod {
-  CASH // Tiền mặt → tự động APPROVED
-  E_WALLET // Ví điện tử (GrabPay, MoMo...) → bắt đầu PENDING
+  CASH
+  E_WALLET
 }
 
 enum TransactionStatus {
-  PENDING // Chờ đối soát
-  APPROVED // Đã xác nhận, tính vào thu nhập ròng
+  PENDING
+  APPROVED
 }
 
 enum Category {
-  // Thu nhập
   GRAB_BIKE
   GRAB_EXPRESS
   GRAB_CAR
@@ -37,11 +36,10 @@ enum Category {
   XANH_SM
   OTHER_INCOME
 
-  // Chi phí
-  FUEL // Xăng xe
-  MAINTENANCE // Bảo dưỡng
-  INSURANCE // Bảo hiểm
-  FOOD // Ăn uống
+  FUEL
+  MAINTENANCE
+  INSURANCE
+  FOOD
   OTHER_EXPENSE
 }
 
@@ -50,7 +48,7 @@ model User {
   phoneNumber  String   @unique
   fullName     String
   password     String
-  balance      Int      @default(0) // Đơn vị: VNĐ (tránh Float)
+  balance      Int      @default(0)
   refreshToken String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -60,7 +58,7 @@ model User {
 
 model Transaction {
   id            String            @id @default(uuid())
-  amount        Int // VNĐ, luôn dương — type xác định cộng hay trừ
+  amount        Int
   type          TransactionType
   category      Category
   paymentMethod PaymentMethod

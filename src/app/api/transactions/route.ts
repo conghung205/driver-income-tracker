@@ -1,0 +1,194 @@
+import {
+    PaymentMethod,
+    Prisma,
+    TransactionType,
+} from "@/generated/prisma/client";
+import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(request: NextRequest) {
+    const userId = request.headers.get("x-user-id");
+    if (!userId) {
+        return NextResponse.json(
+            { message: "Invalid or expired access token." },
+            { status: 401 },
+        );
+    }
+
+    try {
+        const body = await request.json();
+        const { amount, type, category, paymentMethod, description } = body;
+        if (
+            amount === undefined ||
+            amount === null ||
+            !type ||
+            !category ||
+            !paymentMethod
+        ) {
+            return NextResponse.json(
+                {
+                    message: "All fields are required!",
+                },
+                { status: 400 },
+            );
+        }
+        const status = paymentMethod === "CASH" ? "APPROVED" : "PENDING";
+
+        // create Transaction
+        const result = await prisma.$transaction(async (tx) => {
+            const newTransaction = await tx.transaction.create({
+                data: {
+                    amount,
+                    type,
+                    category,
+                    paymentMethod,
+                    description,
+                    status,
+                    userId,
+                },
+            });
+
+            if (status === "APPROVED") {
+                const changeValue = type === "INCOME" ? amount : -amount;
+
+                await tx.user.update({
+                    where: { id: userId },
+                    data: {
+                        balance: {
+                            increment: changeValue,
+                        },
+                    },
+                });
+            }
+
+            return newTransaction;
+        });
+
+        return NextResponse.json(
+            {
+                message: "create transaction successfully",
+                data: result,
+            },
+            { status: 201 },
+        );
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                message: "Internal server error. Please try again later.",
+            },
+            { status: 500 },
+        );
+    }
+}
+
+export async function GET(request: NextRequest) {
+    const userId = request.headers.get("x-user-id");
+    if (!userId) {
+        return NextResponse.json(
+            { message: "Invalid or expired access token." },
+            { status: 401 },
+        );
+    }
+
+    try {
+        // get searchParams
+        const { searchParams } = new URL(request.url);
+        const typeParam = searchParams.get("type");
+        const paymentMethodParam = searchParams.get("paymentMethod");
+        const range = searchParams.get("range");
+        const page = parseInt(searchParams.get("page") || "1");
+        const limit = parseInt(searchParams.get("limit") || "10");
+
+        // How many lines can I skip?
+        const skip = (page - 1) * limit;
+
+        const whereClause: Prisma.TransactionWhereInput = { userId };
+        if (
+            typeParam &&
+            (Object.values(TransactionType) as string[]).includes(typeParam)
+        ) {
+            whereClause.type = typeParam as TransactionType;
+        }
+
+        if (
+            paymentMethodParam &&
+            (Object.values(PaymentMethod) as string[]).includes(
+                paymentMethodParam,
+            )
+        ) {
+            whereClause.paymentMethod = paymentMethodParam as PaymentMethod;
+        }
+
+        if (range) {
+            const now = new Date();
+            let startDate = new Date();
+            const endDate = new Date();
+
+            endDate.setHours(23, 59, 59, 999);
+
+            if (range === "today") {
+                startDate.setHours(0, 0, 0, 0);
+            } else if (range === "week") {
+                const startOfWeek = new Date(now);
+                const dayOfWeek = startOfWeek.getDay();
+                const diff =
+                    startOfWeek.getDate() -
+                    dayOfWeek +
+                    (dayOfWeek === 0 ? -6 : 1);
+
+                startOfWeek.setDate(diff);
+                startOfWeek.setHours(0, 0, 0, 0);
+
+                startDate = startOfWeek;
+            } else if (range === "month") {
+                startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                startDate.setHours(0, 0, 0, 0);
+            }
+
+            whereClause.createdAt = {
+                gte: startDate,
+                lte: endDate,
+            };
+        }
+
+        // find and count
+        const [data, totalItems] = await Promise.all([
+            prisma.transaction.findMany({
+                where: whereClause,
+                orderBy: { createdAt: "desc" },
+                skip: skip,
+                take: limit,
+            }),
+            prisma.transaction.count({
+                where: whereClause,
+            }),
+        ]);
+
+        // totalPages
+        const totalPages = Math.ceil(totalItems / limit);
+
+        return NextResponse.json(
+            {
+                message: "get transaction successfully",
+                data: data,
+                pagination: {
+                    currentPage: page,
+                    limit: limit,
+                    totalItems: totalItems,
+                    totalPages: totalPages,
+                    hasNextPage: page < totalPages,
+                },
+            },
+            { status: 200 },
+        );
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json(
+            {
+                message: "Internal server error. Please try again later.",
+            },
+            { status: 500 },
+        );
+    }
+}
