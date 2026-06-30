@@ -5,8 +5,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        const { refreshToken } = body;
+        const refreshToken = request.cookies.get("refreshToken")?.value;
+
+        if (!refreshToken) {
+            return NextResponse.json(
+                { message: "Invalid refresh token." },
+                { status: 401 },
+            );
+        }
 
         // Generate Dual Tokens
         const accessTokenSecret = new TextEncoder().encode(
@@ -68,16 +74,28 @@ export async function POST(request: NextRequest) {
         });
 
         // Return success response
-        return NextResponse.json(
+        const response = NextResponse.json(
             {
                 message: "Token refreshed successfully!",
-                data: {
-                    accessToken: accessToken,
-                    refreshToken: newRefreshToken,
-                },
             },
             { status: 200 },
         );
+
+        // set cookies
+        response.cookies.set("accessToken", accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 60 * 15,
+        });
+        response.cookies.set("refreshToken", newRefreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 60 * 60 * 24 * 7,
+        });
+
+        return response;
     } catch (error) {
         console.error(error);
         return NextResponse.json(

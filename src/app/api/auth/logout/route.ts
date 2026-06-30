@@ -5,8 +5,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        const { refreshToken } = body;
+        const refreshToken = request.cookies.get("refreshToken")?.value;
+
+        if (!refreshToken) {
+            return NextResponse.json(
+                { message: "Invalid refresh token." },
+                { status: 401 },
+            );
+        }
 
         const refreshTokenSecret = new TextEncoder().encode(
             process.env.JWT_REFRESH_SECRET,
@@ -47,12 +53,16 @@ export async function POST(request: NextRequest) {
         });
 
         // Return success response
-        return NextResponse.json(
+        const response = NextResponse.json(
             {
                 message: "Logout successfully!",
             },
             { status: 200 },
         );
+        response.cookies.delete("accessToken");
+        response.cookies.delete("refreshToken");
+
+        return response;
     } catch (error) {
         console.error(error);
         return NextResponse.json(

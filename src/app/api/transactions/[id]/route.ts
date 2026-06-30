@@ -1,6 +1,7 @@
-import { TransactionStatus } from "@/generated/prisma/enums";
+import { Category, TransactionStatus } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import z from "zod";
 
 export async function DELETE(
     request: NextRequest,
@@ -65,6 +66,12 @@ export async function DELETE(
     }
 }
 
+const updateTransactionSchema = z.object({
+    amount: z.number().positive("Amount must be greater than 0"),
+    category: z.enum(Category),
+    description: z.string().optional(),
+});
+
 export async function PATCH(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> },
@@ -97,16 +104,16 @@ export async function PATCH(
         }
 
         const body = await request.json();
-        const { amount, category, description } = body;
+        const result = updateTransactionSchema.safeParse(body);
 
-        if (amount === undefined || amount === null || !category) {
+        if (!result.success) {
             return NextResponse.json(
-                {
-                    message: "All fields are required!",
-                },
+                { message: result.error.issues[0].message },
                 { status: 400 },
             );
         }
+
+        const { amount, category, description } = result.data;
 
         const updated = await prisma.transaction.updateMany({
             where: { id, userId, status: TransactionStatus.PENDING },

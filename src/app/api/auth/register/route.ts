@@ -2,27 +2,29 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+
+const registerSchema = z.object({
+    phoneNumber: z
+        .string()
+        .regex(/^(0[3|5|7|8|9])+([0-9]{8})$/, "Invalid phone number!"),
+    fullName: z.string().min(2, "Full name is too short"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+});
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { phoneNumber, fullName, password } = body;
+        const result = registerSchema.safeParse(body);
 
-        if (!phoneNumber || !fullName || !password) {
+        if (!result.success) {
             return NextResponse.json(
-                { message: "All fields are required!" },
+                { message: result.error.issues[0].message },
                 { status: 400 },
             );
         }
 
-        // validation phoneNumber
-        const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
-        if (!phoneRegex.test(phoneNumber)) {
-            return NextResponse.json(
-                { message: "Invalid phone number!" },
-                { status: 400 },
-            );
-        }
+        const { phoneNumber, fullName, password } = result.data;
 
         // Check if the phone number is already registered
         const existingUser = await prisma.user.findUnique({
@@ -84,7 +86,7 @@ export async function POST(request: NextRequest) {
         });
 
         // Return success response
-        return NextResponse.json(
+        const response = NextResponse.json(
             {
                 message: "Driver registered successfully!",
                 data: {
@@ -93,12 +95,26 @@ export async function POST(request: NextRequest) {
                         phoneNumber: newUser.phoneNumber,
                         fullName: newUser.fullName,
                     },
-                    accessToken: accessToken,
-                    refreshToken: refreshToken,
                 },
             },
             { status: 201 },
         );
+
+        // set cookies
+        response.cookies.set("accessToken", accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 60 * 15,
+        });
+        response.cookies.set("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 60 * 60 * 24 * 7,
+        });
+
+        return response;
     } catch (error) {
         console.error(error);
         return NextResponse.json(

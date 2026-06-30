@@ -1,10 +1,20 @@
 import {
+    Category,
     PaymentMethod,
     Prisma,
     TransactionType,
 } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+
+const createTransactionSchema = z.object({
+    amount: z.number().positive("Amount must be greater than 0"),
+    type: z.enum(TransactionType),
+    category: z.enum(Category),
+    paymentMethod: z.enum(PaymentMethod),
+    description: z.string().optional(),
+});
 
 export async function POST(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
@@ -17,21 +27,17 @@ export async function POST(request: NextRequest) {
 
     try {
         const body = await request.json();
-        const { amount, type, category, paymentMethod, description } = body;
-        if (
-            amount === undefined ||
-            amount === null ||
-            !type ||
-            !category ||
-            !paymentMethod
-        ) {
+        const resultValidate = createTransactionSchema.safeParse(body);
+
+        if (!resultValidate.success) {
             return NextResponse.json(
-                {
-                    message: "All fields are required!",
-                },
+                { message: resultValidate.error.issues[0].message },
                 { status: 400 },
             );
         }
+        const { amount, type, category, paymentMethod, description } =
+            resultValidate.data;
+
         const status = paymentMethod === "CASH" ? "APPROVED" : "PENDING";
 
         // create Transaction
@@ -118,6 +124,15 @@ export async function GET(request: NextRequest) {
             )
         ) {
             whereClause.paymentMethod = paymentMethodParam as PaymentMethod;
+        }
+
+        const validRanges = ["today", "week", "month"];
+
+        if (range && !validRanges.includes(range)) {
+            return NextResponse.json(
+                { message: "Invalid range." },
+                { status: 400 },
+            );
         }
 
         if (range) {

@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import z from "zod";
 
 export async function GET(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
@@ -49,6 +50,13 @@ export async function GET(request: NextRequest) {
     }
 }
 
+const updateUserSchema = z.object({
+    phoneNumber: z
+        .string()
+        .regex(/^(0[3|5|7|8|9])+([0-9]{8})$/, "Invalid phone number!"),
+    fullName: z.string().min(2, "Full name is too short"),
+});
+
 export async function PATCH(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
     if (!userId) {
@@ -70,23 +78,16 @@ export async function PATCH(request: NextRequest) {
             );
         }
         const body = await request.json();
-        const { phoneNumber, fullName } = body;
+        const result = updateUserSchema.safeParse(body);
 
-        if (!phoneNumber || !fullName) {
+        if (!result.success) {
             return NextResponse.json(
-                { message: "All fields are required!" },
+                { message: result.error.issues[0].message },
                 { status: 400 },
             );
         }
 
-        // validation phoneNumber
-        const phoneRegex = /^(0[3|5|7|8|9])+([0-9]{8})$/;
-        if (!phoneRegex.test(phoneNumber)) {
-            return NextResponse.json(
-                { message: "Invalid phone number!" },
-                { status: 400 },
-            );
-        }
+        const { phoneNumber, fullName } = result.data;
 
         // Check if the phone number already exists.
         const existingPhone = await prisma.user.findFirst({

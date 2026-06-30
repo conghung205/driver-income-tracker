@@ -14,6 +14,15 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const range = searchParams.get("range");
 
+        const validRanges = ["today", "week", "month"];
+
+        if (range && !validRanges.includes(range)) {
+            return NextResponse.json(
+                { message: "Invalid range." },
+                { status: 400 },
+            );
+        }
+
         let timeFilter: { gte?: Date; lte?: Date } = {};
 
         if (range) {
