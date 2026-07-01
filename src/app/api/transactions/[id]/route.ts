@@ -1,7 +1,7 @@
-import { Category, TransactionStatus } from "@/generated/prisma/enums";
+import { TransactionStatus } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
+import { updateTransactionSchema } from "@/validations/transaction.schema";
 import { NextRequest, NextResponse } from "next/server";
-import z from "zod";
 
 export async function DELETE(
     request: NextRequest,
@@ -65,12 +65,6 @@ export async function DELETE(
         );
     }
 }
-
-const updateTransactionSchema = z.object({
-    amount: z.number().positive("Amount must be greater than 0"),
-    category: z.enum(Category),
-    description: z.string().optional(),
-});
 
 export async function PATCH(
     request: NextRequest,

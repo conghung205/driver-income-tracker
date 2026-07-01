@@ -2,15 +2,7 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { SignJWT } from "jose";
 import { NextRequest, NextResponse } from "next/server";
-
-import { z } from "zod";
-
-const loginSchema = z.object({
-    phoneNumber: z
-        .string()
-        .regex(/^(0[3|5|7|8|9])+([0-9]{8})$/, "Invalid phone number!"),
-    password: z.string().min(1, "Password is required"),
-});
+import { loginSchema } from "@/validations/auth.schema";
 
 export async function POST(request: NextRequest) {
     try {

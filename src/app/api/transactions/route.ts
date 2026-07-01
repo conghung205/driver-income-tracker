@@ -1,20 +1,11 @@
 import {
-    Category,
     PaymentMethod,
     Prisma,
     TransactionType,
 } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
+import { createTransactionSchema } from "@/validations/transaction.schema";
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
-
-const createTransactionSchema = z.object({
-    amount: z.number().positive("Amount must be greater than 0"),
-    type: z.enum(TransactionType),
-    category: z.enum(Category),
-    paymentMethod: z.enum(PaymentMethod),
-    description: z.string().optional(),
-});
 
 export async function POST(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
