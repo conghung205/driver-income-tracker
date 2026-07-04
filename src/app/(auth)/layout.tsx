@@ -1,3 +1,4 @@
+import AppLogo from "@/components/shared/AppLogo";
 import React from "react";
 
 export default function LoginLayout({
@@ -6,9 +7,9 @@ export default function LoginLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen w-full flex items-center justify-center bg-slate-50 md:p-4">
-            {/* Giao diện Mobile-First: Form sẽ chiếm full màn hình trên mobile, và thu gọn lại trên desktop */}
-            <div className="w-full max-w-md md:bg-white rounded-2xl md:shadow-md p-6 md:p-8">
+        <div className="min-h-screen w-full flex flex-col bg-bg-primary gap-8 items-center justify-center p-6">
+            <AppLogo description="Hệ thống quản lý thu nhập tối ưu dành cho tài xế công nghệ." />
+            <div className="w-full max-w-md bg-bg-secondary rounded-2xl md:shadow-md border-bd-primary border p-6 md:p-8">
                 {children}
             </div>
         </div>

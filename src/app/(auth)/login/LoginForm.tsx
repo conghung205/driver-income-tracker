@@ -43,18 +43,16 @@ export default function LoginForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
             {/* Phone Number */}
             <Field>
-                <FieldLabel className="text-gray-500">
-                    Số điện thoại:
-                </FieldLabel>
-                <InputGroup className="md:py-4">
+                <FieldLabel className="text-desc">Số điện thoại:</FieldLabel>
+                <InputGroup className="md:py-4 bg-bg-primary border-bd-primary ">
                     <InputGroupInput
                         {...register("phoneNumber")}
-                        className="md:text-[16px]"
+                        className="md:text-[16px] text-white"
                         placeholder="Nhập số điện thoại của bạn..."
                         type="tel"
                     />
                     <InputGroupAddon>
-                        <Phone size={18} />
+                        <Phone className="text-desc" size={18} />
                     </InputGroupAddon>
                 </InputGroup>
                 {errors.phoneNumber && (
@@ -66,27 +64,33 @@ export default function LoginForm() {
 
             {/* Password */}
             <Field>
-                <FieldLabel className="text-gray-500">Mật khẩu:</FieldLabel>
-                <InputGroup className="md:py-4">
+                <FieldLabel className="text-desc">Mật khẩu:</FieldLabel>
+                <InputGroup className="md:py-4 bg-bg-primary border-bd-primary">
                     <InputGroupInput
                         {...register("password")}
-                        className="md:text-[16px]"
+                        className="md:text-[16px] text-white"
                         placeholder="Nhập mật khẩu của bạn..."
                         type={showPassword ? "text" : "password"}
                     />
                     <InputGroupAddon>
-                        <LockKeyhole size={18} />
+                        <LockKeyhole className="text-desc" size={18} />
                     </InputGroupAddon>
                     {/* ẩn/hiện */}
                     <InputGroupAddon
                         align="inline-end"
-                        className="cursor-pointer hover:text-main transition-colors"
+                        className="cursor-pointer transition-colors"
                         onClick={handleTogglePassword}
                     >
                         {showPassword ? (
-                            <EyeOff size={18} />
+                            <EyeOff
+                                className="text-desc hover:text-main"
+                                size={18}
+                            />
                         ) : (
-                            <Eye size={18} />
+                            <Eye
+                                className="text-desc hover:text-main"
+                                size={18}
+                            />
                         )}
                     </InputGroupAddon>
                 </InputGroup>

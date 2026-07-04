@@ -15,12 +15,9 @@ export default function RegisterPage() {
                 <h2 className="text-2xl text-main font-semibold">
                     Tạo tài khoản
                 </h2>
-                <p className="text-gray-600">
-                    Bắt đầu quản lý tài chính thông minh
-                </p>
             </div>
             <RegisterForm />
-            <p className="text-center md:text-[16px] mt-6">
+            <p className="text-center text-desc md:text-[16px] mt-6">
                 Đã có tài khoản?{" "}
                 <Link
                     href="/login"

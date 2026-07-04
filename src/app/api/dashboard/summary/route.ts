@@ -71,6 +71,7 @@ export async function GET(request: NextRequest) {
                     type: "INCOME",
                 },
                 _sum: { amount: true },
+                _count: true,
             }),
             // calculate total EXPENSE
             prisma.transaction.aggregate({
@@ -79,6 +80,7 @@ export async function GET(request: NextRequest) {
                     type: "EXPENSE",
                 },
                 _sum: { amount: true },
+                _count: true,
             }),
             // Retrieve the user's current wallet balance.
             prisma.user.findUnique({
@@ -98,6 +100,12 @@ export async function GET(request: NextRequest) {
         const totalIncome = incomeAggregate._sum.amount || 0;
         const totalExpense = expenseAggregate._sum.amount || 0;
         const netIncome = totalIncome - totalExpense;
+        const incomeCount = incomeAggregate._count || 0;
+        const expenseCount = incomeAggregate._count || 0;
+        const expenseRatio =
+            totalIncome > 0
+                ? Math.round((totalExpense / totalIncome) * 100)
+                : 0;
 
         return NextResponse.json(
             {
@@ -107,6 +115,9 @@ export async function GET(request: NextRequest) {
                     totalIncome,
                     totalExpense,
                     netIncome,
+                    incomeCount,
+                    expenseCount,
+                    expenseRatio,
                     range: range || "all",
                 },
             },

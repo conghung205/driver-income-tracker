@@ -12,12 +12,9 @@ export default function LoginPage() {
         <div>
             <div className="mb-12 md:mb-6 text-center">
                 <h2 className="text-2xl text-main font-semibold">Đăng nhập</h2>
-                <p className="text-gray-600">
-                    Quản lý thu nhập tối ưu cho tài xế
-                </p>
             </div>
             <LoginForm />
-            <p className="text-center md:text-[16px] mt-6">
+            <p className="text-center text-desc md:text-[16px] mt-6">
                 Chưa có tài khoản?{" "}
                 <Link
                     href="/register"

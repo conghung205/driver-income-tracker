@@ -44,6 +44,7 @@ export default function RegisterForm() {
     };
 
     const onSubmit = (data: RegisterFormInput) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { confirmPassword, ...backendData } = data;
 
         mutate(backendData);
@@ -53,16 +54,16 @@ export default function RegisterForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
             {/* full Name */}
             <Field>
-                <FieldLabel className="text-gray-500">Tên hiển thị:</FieldLabel>
-                <InputGroup className="md:py-4">
+                <FieldLabel className="text-desc">Tên hiển thị:</FieldLabel>
+                <InputGroup className="md:py-4  bg-bg-primary border-bd-primary ">
                     <InputGroupInput
-                        className="md:text-[16px]"
+                        className="md:text-[16px] text-white "
                         placeholder="Nhập họ & tên của bạn..."
                         type="text"
                         {...register("fullName")}
                     />
                     <InputGroupAddon>
-                        <UserRound size={18} />
+                        <UserRound className="text-desc" size={18} />
                     </InputGroupAddon>
                 </InputGroup>
                 {errors.fullName && (
@@ -73,18 +74,16 @@ export default function RegisterForm() {
             </Field>
             {/* Phone Number */}
             <Field>
-                <FieldLabel className="text-gray-500">
-                    Số điện thoại:
-                </FieldLabel>
-                <InputGroup className="md:py-4">
+                <FieldLabel className="text-desc">Số điện thoại:</FieldLabel>
+                <InputGroup className="md:py-4 bg-bg-primary border-bd-primary">
                     <InputGroupInput
-                        className="md:text-[16px]"
+                        className="md:text-[16px] text-white"
                         placeholder="Nhập số điện thoại của bạn..."
                         type="tel"
                         {...register("phoneNumber")}
                     />
                     <InputGroupAddon>
-                        <Phone size={18} />
+                        <Phone className="text-desc" size={18} />
                     </InputGroupAddon>
                 </InputGroup>
                 {errors.phoneNumber && (
@@ -96,27 +95,33 @@ export default function RegisterForm() {
 
             {/* Password */}
             <Field>
-                <FieldLabel className="text-gray-500">Mật khẩu:</FieldLabel>
-                <InputGroup className="md:py-4">
+                <FieldLabel className="text-desc">Mật khẩu:</FieldLabel>
+                <InputGroup className="md:py-4 bg-bg-primary border-bd-primary">
                     <InputGroupInput
-                        className="md:text-[16px]"
+                        className="md:text-[16px] text-white"
                         placeholder="Nhập mật khẩu của bạn..."
                         type={showPassword ? "text" : "password"}
                         {...register("password")}
                     />
                     <InputGroupAddon>
-                        <LockKeyhole size={18} />
+                        <LockKeyhole className="text-desc" size={18} />
                     </InputGroupAddon>
                     {/* ẩn/hiện */}
                     <InputGroupAddon
                         align="inline-end"
-                        className="cursor-pointer hover:text-main transition-colors"
+                        className="cursor-pointer transition-colors"
                         onClick={handleTogglePassword}
                     >
                         {showPassword ? (
-                            <EyeOff size={18} />
+                            <EyeOff
+                                className="text-desc hover:text-main"
+                                size={18}
+                            />
                         ) : (
-                            <Eye size={18} />
+                            <Eye
+                                className="text-desc hover:text-main"
+                                size={18}
+                            />
                         )}
                     </InputGroupAddon>
                 </InputGroup>
@@ -128,18 +133,18 @@ export default function RegisterForm() {
             </Field>
             {/* confirm Password */}
             <Field>
-                <FieldLabel className="text-gray-500">
+                <FieldLabel className="text-desc">
                     Xác nhận mật khẩu:
                 </FieldLabel>
-                <InputGroup className="md:py-4">
+                <InputGroup className="md:py-4 bg-bg-primary border-bd-primary">
                     <InputGroupInput
-                        className="md:text-[16px]"
+                        className="md:text-[16px] text-white"
                         placeholder="Nhập lại mật khẩu..."
                         type="password"
                         {...register("confirmPassword")}
                     />
                     <InputGroupAddon>
-                        <LockKeyhole size={18} />
+                        <LockKeyhole className="text-desc" size={18} />
                     </InputGroupAddon>
                 </InputGroup>
                 {errors.confirmPassword && (
