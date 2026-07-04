@@ -1,9 +1,8 @@
 import axiosClient from "@/lib/axios";
+import { DashboardParams } from "@/types/dashboard.type";
 
 export const dashboardServices = {
-    getSumary(range?: string) {
-        return axiosClient.get("/dashboard/summary", {
-            params: { range },
-        });
+    getSumary(params?: DashboardParams) {
+        return axiosClient.get("/dashboard/summary", { params });
     },
 };

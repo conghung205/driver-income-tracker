@@ -1,11 +1,10 @@
 "use client";
+import AddTransactionModal from "@/components/features/dashboard/AddTransactionModal";
 import FilterCard from "@/components/features/dashboard/FilterCard";
 import KpiCard from "@/components/features/dashboard/KpiCard";
 import { buildKpiConfig } from "@/components/features/dashboard/kpiConfig";
-import { Button } from "@/components/ui/button";
 import { FILTER_OPTIONS } from "@/constants/dashboard";
 import { useDashboardSummary } from "@/hooks/useDashboard";
-import { Plus } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function HomePage() {
@@ -14,7 +13,7 @@ export default function HomePage() {
 
     const currentFilter = searchParams.get("range") || "today";
 
-    const { data, isLoading } = useDashboardSummary(currentFilter);
+    const { data, isLoading } = useDashboardSummary({ range: currentFilter });
 
     const kpiConfig = buildKpiConfig(
         data?.incomeCount ?? 0,
@@ -64,10 +63,9 @@ export default function HomePage() {
                         />
                     ))}
                 </div>
-                <Button className="cursor-pointer hidden md:flex uppercase bg-main hover:bg-main/85 font-semibold">
-                    <Plus size={22} />
-                    Thêm giao dịch
-                </Button>
+                <div className="hidden md:flex">
+                    <AddTransactionModal />
+                </div>
             </div>
             {/* card kpi */}
             {isLoading ? (
