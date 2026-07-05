@@ -1,9 +1,13 @@
 "use client";
 import { NAV_ITEMS } from "@/constants/navigation";
+import { useModalStore } from "@/stores/modalStore";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function BottomNav() {
+    const setOpenModal = useModalStore(
+        (state) => state.setOpenAddTransactionModal,
+    );
     const pathname = usePathname();
     return (
         <>
@@ -12,6 +16,7 @@ export default function BottomNav() {
                     {NAV_ITEMS.map((item) =>
                         item.isAction ? (
                             <button
+                                onClick={() => setOpenModal(true)}
                                 key={item.href}
                                 className="bg-main -mt-6 p-3 text-white rounded-full shadow-lg"
                             >

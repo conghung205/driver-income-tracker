@@ -34,9 +34,16 @@ import { useCreateTransaction } from "@/hooks/useTransaction";
 import { CreateTransactionPayload } from "@/types/transaction.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createTransactionSchema } from "@/validations/transaction.schema";
+import { useModalStore } from "@/stores/modalStore";
 
 export default function AddTransactionModal() {
-    const [isOpenModal, setIsOpenModal] = useState(false);
+    const isOpenModal = useModalStore(
+        (state) => state.isOpenAddTransactionModal,
+    );
+    const setOpenModal = useModalStore(
+        (state) => state.setOpenAddTransactionModal,
+    );
+
     const { mutate, isPending } = useCreateTransaction();
     const {
         register,
@@ -76,13 +83,13 @@ export default function AddTransactionModal() {
         mutate(data, {
             onSuccess: () => {
                 reset();
-                setIsOpenModal(false);
+                setOpenModal(false);
             },
         });
     };
 
     return (
-        <Dialog open={isOpenModal} onOpenChange={setIsOpenModal}>
+        <Dialog open={isOpenModal} onOpenChange={setOpenModal}>
             <DialogTrigger asChild>
                 <Button className="cursor-pointer text-xs flex uppercase bg-main hover:bg-main/85 font-semibold">
                     <Plus size={22} />
