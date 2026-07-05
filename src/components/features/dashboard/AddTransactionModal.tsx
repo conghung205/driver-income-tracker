@@ -28,7 +28,7 @@ import {
 } from "@/components/ui/select";
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/constants/transaction";
 import { Plus, TrendingDown, TrendingUp } from "lucide-react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { useCreateTransaction } from "@/hooks/useTransaction";
 import { CreateTransactionPayload } from "@/types/transaction.type";
@@ -36,14 +36,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createTransactionSchema } from "@/validations/transaction.schema";
 
 export default function AddTransactionModal() {
-    const [typeCategory, setTypeCategory] = useState<"INCOME" | "EXPENSE">(
-        "INCOME",
-    );
-    const [paymentMethod, setPaymentMethod] = useState<"CASH" | "E_WALLET">(
-        "CASH",
-    );
     const [isOpenModal, setIsOpenModal] = useState(false);
-
     const { mutate, isPending } = useCreateTransaction();
     const {
         register,
@@ -63,23 +56,29 @@ export default function AddTransactionModal() {
         },
     });
 
+    // useWatch: displays these two properties in the "control";
+    // when the values ​​of these two properties change, it will re-render.
+    const typeCategory = useWatch({ control, name: "type" });
+    const paymentMethod = useWatch({ control, name: "paymentMethod" });
+
     const categories =
         typeCategory === "INCOME" ? INCOME_CATEGORIES : EXPENSE_CATEGORIES;
 
     const handleChangeTypeCategory = (type: "INCOME" | "EXPENSE") => {
-        setTypeCategory(type);
         setValue("type", type);
         setValue("category", null);
     };
     const handleChangePaymentMethod = (type: "CASH" | "E_WALLET") => {
-        setPaymentMethod(type);
         setValue("paymentMethod", type);
     };
 
     const onSubmit = (data: CreateTransactionPayload) => {
-        mutate(data);
-        reset();
-        setIsOpenModal(false);
+        mutate(data, {
+            onSuccess: () => {
+                reset();
+                setIsOpenModal(false);
+            },
+        });
     };
 
     return (
@@ -260,6 +259,7 @@ export default function AddTransactionModal() {
                     <DialogFooter className="bg-bg-secondary border-bd-primary">
                         <DialogClose asChild>
                             <Button
+                                disabled={isPending}
                                 variant="default"
                                 className="text-white py-5 cursor-pointer hidden md:flex px-6 bg-red-500 hover:text-white hover:bg-red-600"
                             >
@@ -267,6 +267,7 @@ export default function AddTransactionModal() {
                             </Button>
                         </DialogClose>
                         <Button
+                            disabled={isPending}
                             type="submit"
                             className="cursor-pointer py-5 px-6 flex bg-main hover:bg-main/85 font-semibold"
                         >

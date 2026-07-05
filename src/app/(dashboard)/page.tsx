@@ -3,17 +3,18 @@ import AddTransactionModal from "@/components/features/dashboard/AddTransactionM
 import FilterCard from "@/components/features/dashboard/FilterCard";
 import KpiCard from "@/components/features/dashboard/KpiCard";
 import { buildKpiConfig } from "@/components/features/dashboard/kpiConfig";
+import RecentTransactions from "@/components/features/dashboard/RecentTransactions";
 import { FILTER_OPTIONS } from "@/constants/dashboard";
 import { useDashboardSummary } from "@/hooks/useDashboard";
+import { useGetUser } from "@/hooks/useUser";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function HomePage() {
     const router = useRouter();
     const searchParams = useSearchParams();
-
     const currentFilter = searchParams.get("range") || "today";
-
     const { data, isLoading } = useDashboardSummary({ range: currentFilter });
+    const { data: userData } = useGetUser();
 
     const kpiConfig = buildKpiConfig(
         data?.incomeCount ?? 0,
@@ -38,7 +39,9 @@ export default function HomePage() {
                     <div className="flex flex-col ">
                         <p>
                             Xin chào,{" "}
-                            <span className="text-main">Nông Công Hưng</span>
+                            <span className="text-main">
+                                {userData?.fullName || "..."}
+                            </span>
                         </p>
                         <p className="text-desc text-xs md:text-sm mt-0.5">
                             {new Date().toLocaleDateString("vi-VN", {
@@ -69,7 +72,7 @@ export default function HomePage() {
             </div>
             {/* card kpi */}
             {isLoading ? (
-                <div className="text-desc text-center my-4">loading...</div>
+                <div className="text-desc my-4">loading...</div>
             ) : (
                 <div className="mt-8 flex flex-col gap-4 md:flex-row">
                     {kpiConfig.map((item) => (
@@ -84,6 +87,11 @@ export default function HomePage() {
                     ))}
                 </div>
             )}
+
+            {/* RecentTransactions */}
+            <div className="py-6">
+                <RecentTransactions />
+            </div>
         </div>
     );
 }

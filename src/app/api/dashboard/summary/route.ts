@@ -101,7 +101,7 @@ export async function GET(request: NextRequest) {
         const totalExpense = expenseAggregate._sum.amount || 0;
         const netIncome = totalIncome - totalExpense;
         const incomeCount = incomeAggregate._count || 0;
-        const expenseCount = incomeAggregate._count || 0;
+        const expenseCount = expenseAggregate._count || 0;
         const expenseRatio =
             totalIncome > 0
                 ? Math.round((totalExpense / totalIncome) * 100)

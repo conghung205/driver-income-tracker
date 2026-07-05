@@ -25,4 +25,29 @@ export interface TransactionParams {
     range?: string;
     type?: TransactionType;
     paymentMethod?: PaymentMethod;
+    page?: number;
+    limit?: number;
+}
+
+export interface TransactionResponse {
+    data: Transaction[];
+    pagination: {
+        currentPage: number;
+        limit: number;
+        totalItems: number;
+        totalPages: number;
+        hasNextPage: boolean;
+    };
+}
+
+export interface Transaction {
+    id: string;
+    amount: number;
+    type: TransactionType;
+    category: Category;
+    paymentMethod: PaymentMethod;
+    status: "PENDING" | "APPROVED";
+    description?: string;
+    createdAt: string;
+    userId: string;
 }

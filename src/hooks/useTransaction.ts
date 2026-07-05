@@ -1,13 +1,16 @@
-import { transactionService } from "@/services/transaction.service";
+import { transactionServices } from "@/services/transaction.service";
 import { ApiError } from "@/types/auth.type";
-import { CreateTransactionPayload, TransactionParams } from "@/types/transaction.type";
+import {
+    CreateTransactionPayload,
+    TransactionParams,
+} from "@/types/transaction.type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useCreateTransaction = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: (data: CreateTransactionPayload) =>
-            transactionService.create(data),
+            transactionServices.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["transactions"] });
             queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
@@ -23,7 +26,7 @@ export const useGetTransactions = (params?: TransactionParams) => {
     return useQuery({
         queryKey: ["transactions", params],
         queryFn: async () => {
-            const res = await transactionService.getAll(params);
+            const res = await transactionServices.getAll(params);
             return res;
         },
     });

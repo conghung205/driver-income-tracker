@@ -1,3 +1,5 @@
+import { WEEKDAYS } from "@/constants/time";
+
 export const formatCurrency = (
     amount: number | string | null | undefined,
 ): string => {
@@ -16,3 +18,44 @@ export const formatCurrency = (
 
     return `${formattedNumber} đ`;
 };
+
+export function formatTransactionDate(date: string | Date) {
+    const d = new Date(date);
+    const now = new Date();
+
+    const time = d.toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+
+    const isToday =
+        d.getDate() === now.getDate() &&
+        d.getMonth() === now.getMonth() &&
+        d.getFullYear() === now.getFullYear();
+
+    if (isToday) {
+        return `Hôm nay · ${time}`;
+    }
+
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+
+    const isYesterday =
+        d.getDate() === yesterday.getDate() &&
+        d.getMonth() === yesterday.getMonth() &&
+        d.getFullYear() === yesterday.getFullYear();
+
+    if (isYesterday) {
+        return `Hôm qua · ${time}`;
+    }
+
+    const weekday = WEEKDAYS[d.getDay()];
+
+    const formattedDate = d.toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    });
+
+    return `${weekday}, ${formattedDate} · ${time}`;
+}

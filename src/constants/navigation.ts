@@ -5,15 +5,17 @@ export const NAV_ITEMS = [
         label: "Tổng Quan",
         href: "/",
         icon: LayoutDashboard,
+        isAction: false,
     },
     {
         label: "Giao Dịch",
         href: "/transactions",
         icon: List,
+        isAction: false,
     },
     {
         label: "Ghi Nhanh",
-        href: "/quick-log",
+        href: "",
         icon: Plus,
         isAction: true,
     },
@@ -21,10 +23,12 @@ export const NAV_ITEMS = [
         label: "Thống Kê",
         href: "/statistics",
         icon: BarChart2,
+        isAction: false,
     },
     {
         label: "Hồ Sơ",
         href: "/profile",
         icon: User,
+        isAction: false,
     },
 ] as const;

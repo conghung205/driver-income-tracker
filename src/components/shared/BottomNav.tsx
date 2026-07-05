@@ -11,13 +11,12 @@ export default function BottomNav() {
                 <div className="px-5 flex w-full justify-between items-center">
                     {NAV_ITEMS.map((item) =>
                         item.isAction ? (
-                            <Link
+                            <button
                                 key={item.href}
-                                href={item.href}
                                 className="bg-main -mt-6 p-3 text-white rounded-full shadow-lg"
                             >
                                 <item.icon size={24} />
-                            </Link>
+                            </button>
                         ) : (
                             <Link
                                 key={item.href}
