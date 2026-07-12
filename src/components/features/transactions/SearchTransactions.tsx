@@ -14,11 +14,11 @@ import { useFilter } from "@/hooks/useFilter";
 import { SearchIcon } from "lucide-react";
 
 interface SearchTransactionsProps {
-    isFilter: boolean;
+    isOpenFilter: boolean;
 }
 
 export default function SearchTransactions({
-    isFilter,
+    isOpenFilter,
 }: SearchTransactionsProps) {
     const { setFilter, getFilter } = useFilter();
 
@@ -43,7 +43,7 @@ export default function SearchTransactions({
 
                 {/* filter */}
                 <div
-                    className={`mt-4 gap-4 ${isFilter ? "flex" : "hidden"} flex-wrap`}
+                    className={`mt-4 gap-4 ${isOpenFilter ? "flex" : "hidden"} flex-wrap`}
                 >
                     <div className="flex items-center gap-2 md:pr-2 md:border-r md:border-r-desc">
                         <span className="text-desc text-sm">Loại:</span>

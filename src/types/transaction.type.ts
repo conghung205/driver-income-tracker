@@ -29,8 +29,9 @@ export interface UpdateTransactionPayload extends BaseTransactionPayload {
 
 export interface TransactionParams {
     range?: string;
-    type?: TransactionType;
-    paymentMethod?: PaymentMethod;
+    type?: string;
+    paymentMethod?: string;
+    status?: string;
     page?: number;
     limit?: number;
 }

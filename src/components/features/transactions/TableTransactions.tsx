@@ -2,16 +2,6 @@
 import { Table, TableBody, TableHeader } from "@/components/ui/table";
 import TransactionRow from "./TransactionRow";
 import { Transaction } from "@/types/transaction.type";
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { useDeleteTransactions } from "@/hooks/useTransaction";
 import TableRowHeader from "./TableRowHeader";

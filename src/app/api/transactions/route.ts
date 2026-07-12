@@ -1,6 +1,7 @@
 import {
     PaymentMethod,
     Prisma,
+    TransactionStatus,
     TransactionType,
 } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
@@ -93,6 +94,7 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const typeParam = searchParams.get("type");
         const paymentMethodParam = searchParams.get("paymentMethod");
+        const statusParam = searchParams.get("status");
         const range = searchParams.get("range");
         const page = parseInt(searchParams.get("page") || "1");
         const limit = parseInt(searchParams.get("limit") || "10");
@@ -115,6 +117,12 @@ export async function GET(request: NextRequest) {
             )
         ) {
             whereClause.paymentMethod = paymentMethodParam as PaymentMethod;
+        }
+        if (
+            statusParam &&
+            (Object.values(TransactionStatus) as string[]).includes(statusParam)
+        ) {
+            whereClause.status = statusParam as TransactionStatus;
         }
 
         const validRanges = ["today", "week", "month"];

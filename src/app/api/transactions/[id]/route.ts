@@ -1,4 +1,3 @@
-import { TransactionStatus } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
 import { updateTransactionSchema } from "@/validations/transaction.schema";
 import { NextRequest, NextResponse } from "next/server";
