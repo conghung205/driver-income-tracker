@@ -18,7 +18,7 @@ export const INCOME_CATEGORIES = [
     { value: "BE_CAR", label: "Be Car" },
     { value: "XANH_SM", label: "Xanh SM" },
     { value: "OTHER_INCOME", label: "Khác" },
-];
+] as const;
 
 export const EXPENSE_CATEGORIES = [
     { value: "FUEL", label: "Xăng xe" },
@@ -26,7 +26,7 @@ export const EXPENSE_CATEGORIES = [
     { value: "INSURANCE", label: "Bảo hiểm" },
     { value: "FOOD", label: "Ăn uống" },
     { value: "OTHER_EXPENSE", label: "Khác" },
-];
+] as const;
 
 export const CATEGORY_CONFIG = {
     GRAB_BIKE: { icon: Bike, label: "GrabBike" },
@@ -41,7 +41,7 @@ export const CATEGORY_CONFIG = {
     INSURANCE: { icon: Shield, label: "Bảo hiểm" },
     FOOD: { icon: Utensils, label: "Ăn uống" },
     OTHER_EXPENSE: { icon: Package, label: "Khác" },
-};
+} as const;
 
 export const STATUS_CONFIG = {
     APPROVED: {
@@ -65,4 +65,23 @@ export const PAYMENTMETHOD_CONFIG = {
     E_WALLET: {
         label: "Ví điện tử",
     },
-};
+} as const;
+
+// filter
+export const TYPE_FILTERS = [
+    { id: "all", title: "Tất cả" },
+    { id: "INCOME", title: "Thu nhập" },
+    { id: "EXPENSE", title: "Chi phí" },
+] as const;
+
+export const PAYMENT_METHOD_FILTERS = [
+    { id: "all", title: "Tất cả" },
+    { id: "CASH", title: "Tiền mặt" },
+    { id: "E_WALLET", title: "Ví điện tử" },
+] as const;
+
+export const STATUS_FILTERS = [
+    { id: "all", title: "Tất cả" },
+    { id: "PENDING", title: "Chờ đối soát" },
+    { id: "APPROVED", title: "Đã xác nhận" },
+] as const;

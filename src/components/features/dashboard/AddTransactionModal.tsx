@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -27,7 +25,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { EXPENSE_CATEGORIES, INCOME_CATEGORIES } from "@/constants/transaction";
-import { Plus, TrendingDown, TrendingUp } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { NumericFormat } from "react-number-format";
 import { useCreateTransaction } from "@/hooks/useTransaction";
@@ -35,6 +33,8 @@ import { CreateTransactionPayload } from "@/types/transaction.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createTransactionSchema } from "@/validations/transaction.schema";
 import { useModalStore } from "@/stores/modalStore";
+import { TransactionTypeSelector } from "@/components/shared/TransactionTypeSelector";
+import PaymentMethodSelector from "@/components/shared/PaymentMethodSelector";
 
 export default function AddTransactionModal() {
     const isOpenModal = useModalStore(
@@ -108,23 +108,10 @@ export default function AddTransactionModal() {
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     {/* category type */}
-                    <div className="bg-bg-primary flex p-2 rounded-2xl">
-                        <button
-                            onClick={() => handleChangeTypeCategory("INCOME")}
-                            type="button"
-                            className={`px-4 border font-medium ${typeCategory === "INCOME" ? "border-main bg-main/10 text-main" : "border-transparent"} rounded-2xl flex-1 py-2 flex items-center gap-2 text-desc cursor-pointer`}
-                        >
-                            <TrendingUp />
-                            Thu nhập
-                        </button>
-                        <button
-                            onClick={() => handleChangeTypeCategory("EXPENSE")}
-                            type="button"
-                            className={`px-4 border font-medium ${typeCategory === "EXPENSE" ? "border-red-500 bg-red-500/10 text-red-500" : "border-transparent"} rounded-2xl flex-1 py-2 flex items-center gap-2 text-desc cursor-pointer`}
-                        >
-                            <TrendingDown /> Chi phí
-                        </button>
-                    </div>
+                    <TransactionTypeSelector
+                        value={typeCategory}
+                        onChange={handleChangeTypeCategory}
+                    />
 
                     {/* amount of money */}
                     <div className="pt-4">
@@ -177,6 +164,9 @@ export default function AddTransactionModal() {
 
                     {/* categories */}
                     <div className="pt-4">
+                        <label className="text-desc block mb-1.5 font-medium">
+                            Chọn danh mục
+                        </label>
                         <Controller
                             control={control}
                             name="category"
@@ -216,31 +206,10 @@ export default function AddTransactionModal() {
                     </div>
 
                     {/* cash, e-wallet */}
-                    <div className="pt-4">
-                        <label className="text-desc font-medium">
-                            Hình thức
-                        </label>
-                        <div className="flex gap-4 mt-1.5">
-                            <button
-                                onClick={() =>
-                                    handleChangePaymentMethod("CASH")
-                                }
-                                type="button"
-                                className={`px-4 border font-medium ${paymentMethod === "CASH" ? "bg-main/10 border-main text-main" : "bg-bg-primary"} border-bd-primary rounded-xl flex-1 py-2 flex items-center gap-2 text-desc cursor-pointer`}
-                            >
-                                Tiền mặt
-                            </button>
-                            <button
-                                onClick={() =>
-                                    handleChangePaymentMethod("E_WALLET")
-                                }
-                                type="button"
-                                className={`px-4 border font-medium ${paymentMethod === "E_WALLET" ? "bg-main/10 border-main text-main" : "bg-bg-primary"} border-bd-primary rounded-xl flex-1 py-2 flex items-center gap-2 text-desc cursor-pointer`}
-                            >
-                                Ví điện tử
-                            </button>
-                        </div>
-                    </div>
+                    <PaymentMethodSelector
+                        value={paymentMethod}
+                        onChange={handleChangePaymentMethod}
+                    />
 
                     {/* description */}
                     <div className="py-4">

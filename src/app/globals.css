@@ -48,10 +48,11 @@
   --radius-4xl: calc(var(--radius) * 2.6);
   --color-main: #10b981;
   --color-desc: #94a3b8;
-  --color-bg-primary: #0F1E2E;
+  --color-bg-primary: #0f172a;
   --color-bd-primary: #334155;
   --color-header: #0A1628;
   --color-bg-secondary: #1E293B;
+  --color-header-table: #172032;
 }
 
 :root {

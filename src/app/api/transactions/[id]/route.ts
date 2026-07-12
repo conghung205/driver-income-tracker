@@ -18,7 +18,7 @@ export async function DELETE(
     try {
         const { id } = await params;
 
-        const result = await prisma.$transaction(async (tx) => {
+        const resultValidate = await prisma.$transaction(async (tx) => {
             const transaction = await tx.transaction.findFirst({
                 where: { id, userId },
             });
@@ -42,7 +42,7 @@ export async function DELETE(
             return transaction;
         });
 
-        if (!result) {
+        if (!resultValidate) {
             return NextResponse.json(
                 { message: "Transaction not found or unauthorized" },
                 { status: 404 },
@@ -90,52 +90,65 @@ export async function PATCH(
                 { status: 404 },
             );
         }
-        if (transaction.status !== "PENDING") {
-            return NextResponse.json(
-                { message: "The transaction has already been approved." },
-                { status: 400 },
-            );
-        }
 
         const body = await request.json();
-        const result = updateTransactionSchema.safeParse(body);
+        const resultValidate = updateTransactionSchema.safeParse(body);
 
-        if (!result.success) {
+        if (!resultValidate.success) {
             return NextResponse.json(
-                { message: result.error.issues[0].message },
+                { message: resultValidate.error.issues[0].message },
                 { status: 400 },
             );
         }
 
-        const { amount, category, description } = result.data;
+        const { amount, type, category, paymentMethod, status, description } =
+            resultValidate.data;
 
-        const updated = await prisma.transaction.updateMany({
-            where: { id, userId, status: TransactionStatus.PENDING },
-            data: {
-                amount,
-                category,
-                description: description ?? transaction.description,
-            },
-        });
+        const result = await prisma.$transaction(async (tx) => {
+            const oldEffect =
+                transaction.status === "APPROVED"
+                    ? transaction.type === "INCOME"
+                        ? transaction.amount
+                        : -transaction.amount
+                    : 0;
 
-        if (updated.count === 0) {
-            return NextResponse.json(
-                {
-                    message: "Transaction already approved",
+            const newEffect =
+                status === "APPROVED"
+                    ? type === "INCOME"
+                        ? amount
+                        : -amount
+                    : 0;
+
+            const delta = newEffect - oldEffect;
+
+            if (delta !== 0) {
+                await tx.user.update({
+                    where: { id: userId },
+                    data: {
+                        balance: {
+                            increment: delta,
+                        },
+                    },
+                });
+            }
+
+            return tx.transaction.update({
+                where: { id, userId },
+                data: {
+                    amount,
+                    type,
+                    category,
+                    paymentMethod,
+                    description,
+                    status,
                 },
-                { status: 400 },
-            );
-        }
+            });
+        });
 
         return NextResponse.json(
             {
                 message: "Updated successfully.",
-                data: {
-                    ...transaction,
-                    amount,
-                    category,
-                    description: description ?? transaction.description,
-                },
+                data: result,
             },
             { status: 200 },
         );

@@ -14,13 +14,19 @@ export type Category =
     | "FOOD"
     | "OTHER_EXPENSE";
 
-export interface CreateTransactionPayload {
+export interface BaseTransactionPayload {
     amount: number | null;
     type: TransactionType;
     category: Category | null;
     paymentMethod: PaymentMethod;
     description?: string;
 }
+export type CreateTransactionPayload = BaseTransactionPayload;
+
+export interface UpdateTransactionPayload extends BaseTransactionPayload {
+    status: "PENDING" | "APPROVED";
+}
+
 export interface TransactionParams {
     range?: string;
     type?: TransactionType;

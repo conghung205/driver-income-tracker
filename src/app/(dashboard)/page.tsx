@@ -1,18 +1,17 @@
 "use client";
 import AddTransactionModal from "@/components/features/dashboard/AddTransactionModal";
-import FilterCard from "@/components/features/dashboard/FilterCard";
+import FilterCard from "@/components/shared/FilterCard";
 import KpiCard from "@/components/features/dashboard/KpiCard";
 import { buildKpiConfig } from "@/components/features/dashboard/kpiConfig";
 import RecentTransactions from "@/components/features/dashboard/RecentTransactions";
 import { FILTER_OPTIONS } from "@/constants/dashboard";
 import { useDashboardSummary } from "@/hooks/useDashboard";
 import { useGetUser } from "@/hooks/useUser";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useFilter } from "@/hooks/useFilter";
 
 export default function HomePage() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const currentFilter = searchParams.get("range") || "today";
+    const { setFilter, getFilter } = useFilter();
+    const currentFilter = getFilter("range", "today");
     const { data, isLoading } = useDashboardSummary({ range: currentFilter });
     const { data: userData } = useGetUser();
 
@@ -21,14 +20,6 @@ export default function HomePage() {
         data?.expenseCount ?? 0,
         data?.expenseRatio ?? 0,
     );
-
-    const handleFilterChange = (filterId: string) => {
-        // retain other search parameters, if any
-        const params = new URLSearchParams(searchParams.toString());
-        params.set("range", filterId);
-
-        router.push(`?${params.toString()}`, { scroll: false });
-    };
 
     return (
         <div className="p-6 ">
@@ -62,7 +53,7 @@ export default function HomePage() {
                             key={option.id}
                             title={option.title}
                             isActive={currentFilter === option.id}
-                            onClick={() => handleFilterChange(option.id)}
+                            onClick={() => setFilter("range", option.id, false)}
                         />
                     ))}
                 </div>

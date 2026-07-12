@@ -46,7 +46,7 @@ export function formatTransactionDate(date: string | Date) {
         d.getFullYear() === yesterday.getFullYear();
 
     if (isYesterday) {
-        return `Hôm qua · ${time}`;
+        return `Hôm qua - ${time}`;
     }
 
     const weekday = WEEKDAYS[d.getDay()];
@@ -57,5 +57,5 @@ export function formatTransactionDate(date: string | Date) {
         year: "numeric",
     });
 
-    return `${weekday}, ${formattedDate} · ${time}`;
+    return `${weekday}, ${formattedDate}`;
 }
