@@ -31,8 +31,8 @@ export default function Pagination({
 
     return (
         <>
-            <div className="flex justify-between items-center">
-                <div className="text-desc text-sm">
+            <div className="w-full flex justify-end ml-auto md:justify-between md:items-center">
+                <div className=" hidden md:block text-desc text-sm">
                     Trang {currentPage} / {totalPages} - {totalItems} giao dịch
                 </div>
 
@@ -41,9 +41,16 @@ export default function Pagination({
                     <button
                         onClick={handlePrevPage}
                         disabled={currentPage === 1}
-                        className="p-1.5 disabled:opacity-50 disabled:cursor-not-allowed rounded text-desc border border-bd-primary bg-bg-secondary"
+                        className="p-1.5 hidden md:block disabled:opacity-50 disabled:cursor-not-allowed rounded text-desc border border-bd-primary bg-bg-secondary"
                     >
-                        <ChevronLeft size={20} />
+                        <ChevronLeft size={18} />
+                    </button>
+                    <button
+                        onClick={handlePrevPage}
+                        disabled={currentPage === 1}
+                        className="p-1 md:hidden disabled:opacity-50 disabled:cursor-not-allowed rounded text-desc border border-bd-primary bg-bg-secondary"
+                    >
+                        <ChevronLeft size={16} />
                     </button>
 
                     {/* Page numbers */}
@@ -61,7 +68,7 @@ export default function Pagination({
                                 onClick={() =>
                                     setFilter("page", String(page), false)
                                 }
-                                className={`py-1 px-3 rounded border ${
+                                className={`py-1 px-2 text-xs md:text-[16px] md:py-1 md:px-3 rounded border ${
                                     currentPage === page
                                         ? "bg-main/10 text-main border-main"
                                         : "text-desc border-bd-primary bg-bg-secondary"
@@ -76,9 +83,16 @@ export default function Pagination({
                     <button
                         onClick={handleNextPage}
                         disabled={!hasNextPage}
-                        className="p-1.5 disabled:opacity-50 disabled:cursor-not-allowed rounded text-desc border border-bd-primary bg-bg-secondary"
+                        className="p-1.5 hidden md:block disabled:opacity-50 disabled:cursor-not-allowed rounded text-desc border border-bd-primary bg-bg-secondary"
                     >
-                        <ChevronRight size={20} />
+                        <ChevronRight size={18} />
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={!hasNextPage}
+                        className="p-1 md:hidden disabled:opacity-50 disabled:cursor-not-allowed rounded text-desc border border-bd-primary bg-bg-secondary"
+                    >
+                        <ChevronRight size={16} />
                     </button>
                 </div>
             </div>

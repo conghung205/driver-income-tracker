@@ -28,13 +28,10 @@ export default function SearchTransactions({
 
     return (
         <>
-            <div className="p-5 pb-7 bg-bg-secondary rounded-2xl border border-bd-primary">
+            <div className="p-3 pb-5 md:p-5 md:pb-7 bg-bg-secondary rounded-2xl border border-bd-primary">
                 <Field className="w-full">
-                    <InputGroup className="border bg-bg-primary border-bd-primary py-5">
-                        <InputGroupInput
-                            id="inline-start-input"
-                            placeholder="Tìm kiếm theo danh mục..."
-                        />
+                    <InputGroup className="border bg-bg-primary border-bd-primary md:py-5">
+                        <InputGroupInput placeholder="Tìm kiếm theo danh mục..." />
                         <InputGroupAddon align="inline-start">
                             <SearchIcon className="text-desc" />
                         </InputGroupAddon>

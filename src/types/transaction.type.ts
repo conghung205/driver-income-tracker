@@ -58,3 +58,10 @@ export interface Transaction {
     createdAt: string;
     userId: string;
 }
+
+export interface PaginationI {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+    hasNextPage: boolean;
+}

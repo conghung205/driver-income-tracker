@@ -11,21 +11,21 @@ import {
 
 interface DialogConfirmDeleteProps {
     deleteId: string | null;
-    setDeleteId(id: string | null): void;
+    closeDeleteModal(): void;
     isPending: boolean;
     handleConfirmDelete(): void;
 }
 
 export default function DialogConfirmDelete({
     deleteId,
-    setDeleteId,
+    closeDeleteModal,
     isPending,
     handleConfirmDelete,
 }: DialogConfirmDeleteProps) {
     return (
         <AlertDialog
             open={!!deleteId}
-            onOpenChange={(open) => !open && setDeleteId(null)}
+            onOpenChange={(open) => !open && closeDeleteModal()}
         >
             <AlertDialogContent
                 className="bg-bg-secondary border border-bd-primary"
@@ -44,7 +44,7 @@ export default function DialogConfirmDelete({
                     <AlertDialogCancel
                         className="bg-red-600 cursor-pointer text-white/80 border-0 hover:bg-red-500 hover:text-white"
                         disabled={isPending}
-                        onClick={() => setDeleteId(null)}
+                        onClick={() => closeDeleteModal()}
                     >
                         Hủy
                     </AlertDialogCancel>
