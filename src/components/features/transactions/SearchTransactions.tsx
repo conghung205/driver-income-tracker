@@ -1,3 +1,4 @@
+"use client";
 import FilterCard from "@/components/shared/FilterCard";
 import { Field } from "@/components/ui/field";
 import {
@@ -6,19 +7,23 @@ import {
     InputGroupInput,
 } from "@/components/ui/input-group";
 import {
+    ALL_CATEGORIES,
     PAYMENT_METHOD_FILTERS,
     STATUS_FILTERS,
     TYPE_FILTERS,
 } from "@/constants/transaction";
 import { useFilter } from "@/hooks/useFilter";
 import { SearchIcon } from "lucide-react";
+import { useRef } from "react";
 
 interface SearchTransactionsProps {
     isOpenFilter: boolean;
+    setNoResult: (value: boolean) => void;
 }
 
 export default function SearchTransactions({
     isOpenFilter,
+    setNoResult,
 }: SearchTransactionsProps) {
     const { setFilter, getFilter } = useFilter();
 
@@ -26,12 +31,43 @@ export default function SearchTransactions({
     const currentPaymentMethod = getFilter("paymentMethod");
     const currentStatus = getFilter("status");
 
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const handleChangeInput = (keyword: string) => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+
+        timeoutRef.current = setTimeout(() => {
+            if (!keyword.trim()) {
+                setFilter("category", "all");
+                setNoResult(false);
+                return;
+            }
+
+            const matches = ALL_CATEGORIES.filter((c) =>
+                c.label.toLowerCase().includes(keyword.toLowerCase()),
+            ).map((c) => c.value);
+
+            if (matches.length > 0) {
+                setFilter("category", matches.join(","));
+                setNoResult(false);
+            } else {
+                setNoResult(true);
+                setFilter("category", "all");
+            }
+        }, 500);
+    };
+
     return (
         <>
             <div className="p-3 pb-5 md:p-5 md:pb-7 bg-bg-secondary rounded-2xl border border-bd-primary">
                 <Field className="w-full">
                     <InputGroup className="border bg-bg-primary border-bd-primary md:py-5">
-                        <InputGroupInput placeholder="Tìm kiếm theo danh mục..." />
+                        <InputGroupInput
+                            onChange={(e) => handleChangeInput(e.target.value)}
+                            placeholder="Tìm kiếm theo danh mục..."
+                        />
                         <InputGroupAddon align="inline-start">
                             <SearchIcon className="text-desc" />
                         </InputGroupAddon>

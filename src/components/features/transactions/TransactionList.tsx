@@ -23,6 +23,14 @@ export default function TransactionList({
         closeDeleteModal,
     } = useTransactionDelete();
 
+    if (!transactions?.length) {
+        return (
+            <p className="text-center my-5 text-desc">
+                Không tìm thấy kết quả phù hợp!
+            </p>
+        );
+    }
+
     return (
         <>
             <div>

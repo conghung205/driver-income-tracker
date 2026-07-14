@@ -1,15 +1,17 @@
 "use client";
 import { SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
-import SearchTransactions from "./SearchTransactions";
 import { PaginationI } from "@/types/transaction.type";
+import SearchTransactions from "./SearchTransactions";
 
 interface TransactionHeaderProps {
     pagination: PaginationI | undefined;
+    setNoResult: (value: boolean) => void;
 }
 
 export default function TransactionHeader({
     pagination,
+    setNoResult,
 }: TransactionHeaderProps) {
     const [isOpenFilter, setIsOpenFilter] = useState(false);
     return (
@@ -32,7 +34,10 @@ export default function TransactionHeader({
             </div>
 
             {/* search */}
-            <SearchTransactions isOpenFilter={isOpenFilter} />
+            <SearchTransactions
+                isOpenFilter={isOpenFilter}
+                setNoResult={setNoResult}
+            />
         </div>
     );
 }

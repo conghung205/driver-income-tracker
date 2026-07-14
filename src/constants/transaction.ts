@@ -28,6 +28,8 @@ export const EXPENSE_CATEGORIES = [
     { value: "OTHER_EXPENSE", label: "Khác" },
 ] as const;
 
+export const ALL_CATEGORIES = [...INCOME_CATEGORIES, ...EXPENSE_CATEGORIES];
+
 export const CATEGORY_CONFIG = {
     GRAB_BIKE: { icon: Bike, label: "GrabBike" },
     GRAB_EXPRESS: { icon: Package, label: "Grab Express" },

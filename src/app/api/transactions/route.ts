@@ -1,4 +1,5 @@
 import {
+    Category,
     PaymentMethod,
     Prisma,
     TransactionStatus,
@@ -98,6 +99,7 @@ export async function GET(request: NextRequest) {
         const range = searchParams.get("range");
         const page = parseInt(searchParams.get("page") || "1");
         const limit = parseInt(searchParams.get("limit") || "10");
+        const categoryParam = searchParams.get("category");
 
         // How many lines can I skip?
         const skip = (page - 1) * limit;
@@ -123,6 +125,10 @@ export async function GET(request: NextRequest) {
             (Object.values(TransactionStatus) as string[]).includes(statusParam)
         ) {
             whereClause.status = statusParam as TransactionStatus;
+        }
+        if (categoryParam) {
+            const categories = categoryParam.split(",");
+            whereClause.category = { in: categories as Category[] };
         }
 
         const validRanges = ["today", "week", "month"];

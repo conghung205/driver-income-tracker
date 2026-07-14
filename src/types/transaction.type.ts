@@ -34,6 +34,7 @@ export interface TransactionParams {
     status?: string;
     page?: number;
     limit?: number;
+    category?: string;
 }
 
 export interface TransactionResponse {
