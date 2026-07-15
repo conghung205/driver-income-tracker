@@ -1,24 +1,25 @@
 import prisma from "@/lib/prisma";
+import { getVNDateRange } from "@/utils/date";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
     if (!userId) {
-        return NextResponse.json(
-            { message: "Invalid or expired access token." },
-            { status: 401 },
-        );
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     try {
         const { searchParams } = new URL(request.url);
         const range = searchParams.get("range");
 
-        const validRanges = ["today", "week", "month"];
+        const rangeRegex = /^(today|week|month|last_\d+_months)$/;
 
-        if (range && !validRanges.includes(range)) {
+        if (range && !rangeRegex.test(range)) {
             return NextResponse.json(
-                { message: "Invalid range." },
+                {
+                    message:
+                        "Invalid range format. Use 'today', 'week', 'month' or 'last_X_months'.",
+                },
                 { status: 400 },
             );
         }
@@ -26,31 +27,7 @@ export async function GET(request: NextRequest) {
         let timeFilter: { gte?: Date; lte?: Date } = {};
 
         if (range) {
-            const now = new Date();
-            let startDate = new Date();
-            const endDate = new Date();
-
-            // Chốt chặn cuối ngày hôm nay
-            endDate.setHours(23, 59, 59, 999);
-
-            if (range === "today") {
-                startDate.setHours(0, 0, 0, 0);
-            } else if (range === "week") {
-                const startOfWeek = new Date(now);
-                const dayOfWeek = startOfWeek.getDay();
-                const diff =
-                    startOfWeek.getDate() -
-                    dayOfWeek +
-                    (dayOfWeek === 0 ? -6 : 1);
-
-                startOfWeek.setDate(diff);
-                startOfWeek.setHours(0, 0, 0, 0);
-                startDate = startOfWeek;
-            } else if (range === "month") {
-                startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-                startDate.setHours(0, 0, 0, 0);
-            }
-
+            const { startDate, endDate } = getVNDateRange(range);
             timeFilter = {
                 gte: startDate,
                 lte: endDate,

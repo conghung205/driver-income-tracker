@@ -6,16 +6,14 @@ import {
     TransactionType,
 } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
+import { getVNDateRange } from "@/utils/date";
 import { createTransactionSchema } from "@/validations/transaction.schema";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
     if (!userId) {
-        return NextResponse.json(
-            { message: "Invalid or expired access token." },
-            { status: 401 },
-        );
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     try {
@@ -84,10 +82,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
     if (!userId) {
-        return NextResponse.json(
-            { message: "Invalid or expired access token." },
-            { status: 401 },
-        );
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     try {
@@ -100,6 +95,18 @@ export async function GET(request: NextRequest) {
         const page = parseInt(searchParams.get("page") || "1");
         const limit = parseInt(searchParams.get("limit") || "10");
         const categoryParam = searchParams.get("category");
+
+        const rangeRegex = /^(today|week|month|last_\d+_months)$/;
+
+        if (range && !rangeRegex.test(range)) {
+            return NextResponse.json(
+                {
+                    message:
+                        "Invalid range format. Use 'today', 'week', 'month' or 'last_X_months'.",
+                },
+                { status: 400 },
+            );
+        }
 
         // How many lines can I skip?
         const skip = (page - 1) * limit;
@@ -131,41 +138,8 @@ export async function GET(request: NextRequest) {
             whereClause.category = { in: categories as Category[] };
         }
 
-        const validRanges = ["today", "week", "month"];
-
-        if (range && !validRanges.includes(range)) {
-            return NextResponse.json(
-                { message: "Invalid range." },
-                { status: 400 },
-            );
-        }
-
         if (range) {
-            const now = new Date();
-            let startDate = new Date();
-            const endDate = new Date();
-
-            endDate.setHours(23, 59, 59, 999);
-
-            if (range === "today") {
-                startDate.setHours(0, 0, 0, 0);
-            } else if (range === "week") {
-                const startOfWeek = new Date(now);
-                const dayOfWeek = startOfWeek.getDay();
-                const diff =
-                    startOfWeek.getDate() -
-                    dayOfWeek +
-                    (dayOfWeek === 0 ? -6 : 1);
-
-                startOfWeek.setDate(diff);
-                startOfWeek.setHours(0, 0, 0, 0);
-
-                startDate = startOfWeek;
-            } else if (range === "month") {
-                startDate = new Date(now.getFullYear(), now.getMonth(), 1);
-                startDate.setHours(0, 0, 0, 0);
-            }
-
+            const { startDate, endDate } = getVNDateRange(range);
             whereClause.createdAt = {
                 gte: startDate,
                 lte: endDate,

@@ -8,10 +8,7 @@ export async function PATCH(
 ) {
     const userId = request.headers.get("x-user-id");
     if (!userId) {
-        return NextResponse.json(
-            { message: "Invalid or expired access token." },
-            { status: 401 },
-        );
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     try {

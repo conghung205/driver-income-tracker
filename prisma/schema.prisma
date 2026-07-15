@@ -43,6 +43,11 @@ enum Category {
   OTHER_EXPENSE
 }
 
+enum VehicleType {
+  MOTORBIKE
+  CAR
+}
+
 model User {
   id           String   @id @default(uuid())
   phoneNumber  String   @unique
@@ -50,10 +55,12 @@ model User {
   password     String
   balance      Int      @default(0)
   refreshToken String?
+  dailyGoal    Int?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   transactions Transaction[]
+  vehicles     Vehicle[]
 }
 
 model Transaction {
@@ -69,4 +76,17 @@ model Transaction {
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Vehicle {
+  id              String      @id @default(uuid())
+  type            VehicleType
+  brand           String
+  model           String?
+  plate           String      @unique
+  fuelConsumption Float?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  userId          String
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

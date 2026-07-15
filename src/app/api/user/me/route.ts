@@ -1,14 +1,11 @@
 import prisma from "@/lib/prisma";
+import { updateUserSchema } from "@/validations/user.schema";
 import { NextRequest, NextResponse } from "next/server";
-import z from "zod";
 
 export async function GET(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
     if (!userId) {
-        return NextResponse.json(
-            { message: "Invalid or expired access token." },
-            { status: 401 },
-        );
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     try {
@@ -50,33 +47,13 @@ export async function GET(request: NextRequest) {
     }
 }
 
-const updateUserSchema = z.object({
-    phoneNumber: z
-        .string()
-        .regex(/^(0[3|5|7|8|9])+([0-9]{8})$/, "Invalid phone number!"),
-    fullName: z.string().min(2, "Full name is too short"),
-});
-
 export async function PATCH(request: NextRequest) {
     const userId = request.headers.get("x-user-id");
     if (!userId) {
-        return NextResponse.json(
-            { message: "Invalid or expired access token." },
-            { status: 401 },
-        );
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     try {
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-        });
-
-        if (!user) {
-            return NextResponse.json(
-                { message: "User not found or unauthorized." },
-                { status: 404 },
-            );
-        }
         const body = await request.json();
         const result = updateUserSchema.safeParse(body);
 
@@ -87,28 +64,49 @@ export async function PATCH(request: NextRequest) {
             );
         }
 
-        const { phoneNumber, fullName } = result.data;
-
-        // Check if the phone number already exists.
-        const existingPhone = await prisma.user.findFirst({
-            where: { phoneNumber: phoneNumber, NOT: { id: userId } },
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
         });
 
-        if (existingPhone) {
+        if (!user) {
             return NextResponse.json(
-                {
-                    message: "The phone number already exists.",
-                },
-                { status: 400 },
+                { message: "User not found or unauthorized." },
+                { status: 404 },
             );
+        }
+
+        const { phoneNumber, fullName } = result.data;
+        const dataToUpdate: {
+            fullName?: string;
+            phoneNumber?: string;
+        } = {};
+
+        if (fullName !== undefined) {
+            dataToUpdate.fullName = fullName;
+        }
+
+        if (phoneNumber !== undefined) {
+            const existingPhone = await prisma.user.findFirst({
+                where: {
+                    phoneNumber,
+                    NOT: { id: userId },
+                },
+            });
+
+            if (existingPhone) {
+                return NextResponse.json(
+                    {
+                        message: "The phone number already exists.",
+                    },
+                    { status: 400 },
+                );
+            }
+            dataToUpdate.phoneNumber = phoneNumber;
         }
 
         const newUser = await prisma.user.update({
             where: { id: userId },
-            data: {
-                fullName,
-                phoneNumber,
-            },
+            data: dataToUpdate,
         });
 
         const {
