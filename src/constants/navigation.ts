@@ -32,3 +32,9 @@ export const NAV_ITEMS = [
         isAction: false,
     },
 ] as const;
+
+export const TABS_PROFILE = [
+    { id: "goal", label: "Mục tiêu thu nhập" },
+    { id: "personal", label: "Thông tin cá nhân" },
+    { id: "security", label: "Mật khẩu & bảo mật" },
+] as const;

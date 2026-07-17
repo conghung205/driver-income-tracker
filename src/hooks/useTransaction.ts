@@ -15,6 +15,7 @@ export const useCreateTransaction = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["transactions"] });
             queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
+            queryClient.invalidateQueries({ queryKey: ["goal"] });
         },
         onError: (error: ApiError) => {
             const errorMessage = error.response?.data?.message;
