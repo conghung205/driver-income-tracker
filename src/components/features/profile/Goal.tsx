@@ -8,6 +8,7 @@ interface GoalProps {
 
 export default function Goal({ goal, openModal }: GoalProps) {
     const progressPercentage = goal?.progressPercentage || 0;
+    const percentUp = progressPercentage > 50 || 0;
     return (
         <>
             <div className="p-5 bg-bg-secondary border border-bd-primary flex flex-col gap-4 rounded-2xl">
@@ -20,35 +21,40 @@ export default function Goal({ goal, openModal }: GoalProps) {
                             Quản lý mục tiêu thu nhập
                         </p>
                     </div>
-                    <button
-                        onClick={() => openModal()}
-                        className="text-xs font-medium bg-main px-3 py-1.5 rounded-2xl text-gray-200 cursor-pointer hover:bg-main/90"
-                    >
-                        Thay đổi chỉ tiêu
-                    </button>
+                    <div className="w-1/2 flex justify-end md:block md:w-auto">
+                        <button
+                            onClick={() => openModal()}
+                            className="text-[10px] md:text-xs
+                             font-medium bg-main px-2 py-1 md:px-3 md:py-1.5 rounded-2xl text-gray-200 cursor-pointer hover:bg-main/90"
+                        >
+                            Thay đổi chỉ tiêu
+                        </button>
+                    </div>
                 </div>
 
-                <div className="flex gap-5 justify-between items-center">
-                    <div className="p-5 w-full bg-bg-primary border border-bd-primary rounded-2xl">
+                <div className="flex flex-col md:flex-row md:gap-5 md:justify-between md:items-center">
+                    <div className="p-4 md:p-5 my-1.5 md:my-0 w-full bg-bg-primary border border-bd-primary rounded-2xl">
                         <h3 className="text-desc text-sm">
                             Mục tiêu đặt ra hàng ngày
                         </h3>
-                        <p className="mt-5 font-medium text-lg">
+                        <p className="mt-5 font-medium text-gray-200 text-lg">
                             {formatCurrency(goal?.dailyGoal)}
                         </p>
                     </div>
-                    <div className="p-5 w-full bg-bg-primary border border-bd-primary rounded-2xl">
+                    <div className="p-4 md:p-5 my-1.5 md:my-0 w-full bg-bg-primary border border-bd-primary rounded-2xl">
                         <p className="text-desc text-sm">
                             Doanh thu thực tế hôm nay
                         </p>
-                        <p className="mt-5 font-medium text-lg">
+                        <p
+                            className={`mt-5 ${percentUp ? "text-main" : "text-amber-400"} font-medium text-lg`}
+                        >
                             {formatCurrency(goal?.todayIncome)}
                         </p>
                     </div>
                 </div>
 
                 {/* progressPercentage */}
-                <div className="p-5 w-full bg-bg-primary border border-bd-primary rounded-2xl">
+                <div className="p-4 md:p-5 w-full bg-bg-primary border border-bd-primary rounded-2xl">
                     <div className="flex justify-between mb-5">
                         <span className="text-sm font-medium text-desc">
                             Tiến độ hôm nay

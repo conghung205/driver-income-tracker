@@ -28,9 +28,9 @@ export default function Security({ openModal }: SecurityProps) {
                         Quản lý mật khẩu của bạn
                     </p>
                 </div>
-                <div className="p-2.5 px-5 flex border border-bd-primary justify-between items-center bg-bg-primary hover:bg-bg-primary/50 rounded-2xl">
+                <div className="p-2 px-4 md:p-2.5 md:px-5 flex border border-bd-primary justify-between items-center bg-bg-primary hover:bg-bg-primary/50 rounded-2xl">
                     <div>
-                        <div className="font-medium text-gray-200">
+                        <div className="font-medium text-sm md:text-[16px] text-gray-200">
                             Đổi mật khẩu
                         </div>
                         <div className="text-sm text-desc mb-2">
