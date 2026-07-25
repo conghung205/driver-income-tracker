@@ -1,6 +1,8 @@
 import { CaculateBestDayTransaction } from "@/types/report.type";
 
-export const caculateBestDay = (transactions: CaculateBestDayTransaction[]) => {
+export const calculateDayStats = (
+    transactions: CaculateBestDayTransaction[],
+) => {
     const dayMap: Record<string, number> = {};
     const dateFormatter = new Intl.DateTimeFormat("sv-SE", {
         timeZone: "Asia/Ho_Chi_Minh",
@@ -13,13 +15,30 @@ export const caculateBestDay = (transactions: CaculateBestDayTransaction[]) => {
         const day = dateFormatter.format(transaction.createdAt);
         dayMap[day] = (dayMap[day] || 0) + transaction.amount;
     }
-    const bestDayEntry = Object.entries(dayMap).sort(
-        ([, a], [, b]) => b - a,
-    )[0];
+    const entries = Object.entries(dayMap);
+    if (!entries.length) {
+        return {
+            bestDay: null,
+            worstDay: null,
+        };
+    }
 
-    const bestDay = bestDayEntry
-        ? { date: bestDayEntry[0], amount: bestDayEntry[1] }
-        : null;
+    const bestDay = entries.reduce((best, current) =>
+        current[1] > best[1] ? current : best,
+    );
 
-    return bestDay;
+    const worstDay = entries.reduce((worst, current) =>
+        current[1] < worst[1] ? current : worst,
+    );
+
+    return {
+        bestDay: {
+            date: bestDay[0],
+            amount: bestDay[1],
+        },
+        worstDay: {
+            date: worstDay[0],
+            amount: worstDay[1],
+        },
+    };
 };

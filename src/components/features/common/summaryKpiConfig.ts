@@ -1,6 +1,6 @@
 import { PiggyBank, TrendingDown, TrendingUp } from "lucide-react";
 
-export const buildKpiConfig = (
+export const getSummaryKpis = (
     incomeCount: number,
     expenseCount: number,
     expenseRatio: number,

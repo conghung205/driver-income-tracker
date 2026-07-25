@@ -1,8 +1,8 @@
 import { dashboardServices } from "@/services/dashboard.service";
-import { DashboardParams } from "@/types/dashboard.type";
+import { ParamsI } from "@/types/params.type";
 import { useQuery } from "@tanstack/react-query";
 
-export const useDashboardSummary = (params?: DashboardParams) => {
+export const useDashboardSummary = (params?: ParamsI) => {
     return useQuery({
         queryKey: ["dashboard-summary", params],
         queryFn: async () => {

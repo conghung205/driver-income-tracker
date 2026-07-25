@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { getVNDateRange } from "@/utils/date";
-import { caculateBestDay } from "@/utils/report/caculateBestDay";
+import { calculateDayStats } from "@/utils/report/caculateBestDay";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
                 ? Math.round((totalExpense / totalIncome) * 100)
                 : 0;
         const totalCount = incomeCount + expenseCount;
-        const bestDay = caculateBestDay(allIncomeTransactions);
+        const { bestDay, worstDay } = calculateDayStats(allIncomeTransactions);
 
         const topCategory = topCategoryData[0]
             ? {
@@ -129,6 +129,7 @@ export async function GET(request: NextRequest) {
                     topCategory,
                     avgDailyIncome,
                     bestDay,
+                    worstDay,
                     expenseRatio,
                     range: range || "all",
                 },

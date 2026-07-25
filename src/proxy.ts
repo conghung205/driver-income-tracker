@@ -64,7 +64,8 @@ export const config = {
         "/",
         "/transactions/:path*",
         "/profile/:path*",
-        "/statistics/:path*",
         "/api/vehicles/:path*",
+        "/api/reports/:path*",
+        "/statistics/:path*",
     ],
 };

@@ -1,8 +1,8 @@
 "use client";
 import AddTransactionModal from "@/components/features/dashboard/AddTransactionModal";
 import FilterCard from "@/components/shared/FilterCard";
-import KpiCard from "@/components/features/dashboard/KpiCard";
-import { buildKpiConfig } from "@/components/features/dashboard/kpiConfig";
+import KpiCard from "@/components/features/common/KpiCard";
+import { getSummaryKpis } from "@/components/features/common/summaryKpiConfig";
 import RecentTransactions from "@/components/features/dashboard/RecentTransactions";
 import { FILTER_OPTIONS } from "@/constants/dashboard";
 import { useDashboardSummary } from "@/hooks/useDashboard";
@@ -15,7 +15,7 @@ export default function HomePage() {
     const { data, isLoading } = useDashboardSummary({ range: currentFilter });
     const { data: userData } = useGetUser();
 
-    const kpiConfig = buildKpiConfig(
+    const kpiConfig = getSummaryKpis(
         data?.incomeCount ?? 0,
         data?.expenseCount ?? 0,
         data?.expenseRatio ?? 0,
