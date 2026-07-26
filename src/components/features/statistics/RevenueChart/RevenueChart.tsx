@@ -45,6 +45,13 @@ export default function RevenueChart({ revenues }: RevenueChartProps) {
                                 width="auto"
                                 fontSize={14}
                                 hide={isMobile}
+                                tickFormatter={(value) => {
+                                    if (value >= 1000000)
+                                        return `${(value / 1000000).toFixed(1)}tr`;
+                                    if (value >= 1000)
+                                        return `${(value / 1000).toFixed(0)}k`;
+                                    return value;
+                                }}
                             />
                             <CartesianGrid
                                 stroke="#374151"

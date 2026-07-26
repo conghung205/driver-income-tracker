@@ -54,11 +54,11 @@ export default function RegisterForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
             {/* full Name */}
             <Field>
-                <FieldLabel className="text-desc">Tên hiển thị:</FieldLabel>
+                <FieldLabel className="text-desc">Tên đầy đủ:</FieldLabel>
                 <InputGroup className="md:py-4  bg-bg-primary border-bd-primary ">
                     <InputGroupInput
                         className="md:text-[16px] text-white "
-                        placeholder="Nhập họ & tên của bạn..."
+                        placeholder="Nhập tên đầy đủ của bạn..."
                         type="text"
                         {...register("fullName")}
                     />

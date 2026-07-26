@@ -3,7 +3,7 @@ import RegisterForm from "./RegisterForm";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Đăng ký | Tài xế",
+    title: "Đăng ký",
     description:
         "Đăng ký ngay để bắt đầu tối ưu hóa và quản lý thu nhập cuốc xe của bạn.",
 };

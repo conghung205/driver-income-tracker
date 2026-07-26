@@ -3,7 +3,7 @@ import LoginForm from "./LoginForm";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-    title: "Đăng nhập | Tài xế",
+    title: "Đăng nhập",
     description: "Hệ thống quản lý thu nhập tối ưu dành cho tài xế công nghệ.",
 };
 

@@ -1,6 +1,13 @@
 import BottomNav from "@/components/shared/BottomNav";
 import Header from "@/components/shared/Header";
 import Sidebar from "@/components/shared/Sidebar";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Tổng Quan",
+    description:
+        "Bảng điều khiển tổng quan về tình hình tài chính, số dư hiện tại, biến động dòng tiền và các chỉ số thu chi mới nhất.",
+};
 
 export default function DashboardLayout({
     children,

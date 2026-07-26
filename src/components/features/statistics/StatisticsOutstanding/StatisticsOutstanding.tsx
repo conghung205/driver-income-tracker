@@ -21,7 +21,7 @@ export default function StatisticsOutstanding({
                 Điểm nổi bật
             </h2>
 
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-5">
                 {outStandingConfig.map((item) => (
                     <StatisticsOutstandingItem
                         key={item.key}

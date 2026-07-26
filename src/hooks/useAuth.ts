@@ -3,6 +3,7 @@ import { authServices } from "@/services/auth.service";
 import { ApiError, LoginPayload, RegisterPayload } from "@/types/auth.type";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export const useLogin = () => {
     const router = useRouter();
@@ -38,11 +39,22 @@ export const useLogout = () => {
 
     return useMutation({
         mutationFn: () => authServices.logout(),
+        onMutate: () => {
+            toast.loading("Đang đăng xuất...", {
+                id: "logout",
+            });
+        },
         onSuccess: () => {
+            toast.success("Đăng xuất thành công", {
+                id: "logout",
+            });
+
             router.push("/login");
         },
         onError: () => {
-            console.error("Đăng xuất thất bại!");
+            toast.error("Đăng xuất thất bại", {
+                id: "logout",
+            });
         },
     });
 };

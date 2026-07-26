@@ -18,7 +18,7 @@ export default function StatisticsOutstandingItem({
 }: StatisticsOutstandingItemProps) {
     const style = VARIANT_STYLES[variant];
     return (
-        <div className={`p-5 bg-bg-primary rounded-2xl`}>
+        <div className={`p-3 md:p-5 bg-bg-primary rounded-2xl`}>
             <div className={`flex items-center justify-between gap-2 `}>
                 <div className="flex items-center gap-3">
                     <Icon
@@ -27,16 +27,18 @@ export default function StatisticsOutstandingItem({
                     />
                     <div>
                         <div
-                            className={`text-desc text-xs font-bold uppercase`}
+                            className={`text-desc text-[10px] md:text-xs font-bold uppercase`}
                         >
                             {title}
                         </div>
-                        <div className="text-sm text-desc pt-1">
+                        <div className="text-xs md:text-sm text-desc pt-1">
                             {description}
                         </div>
                     </div>
                 </div>
-                <div className={`${style.title} font-semibold`}>
+                <div
+                    className={`${style.title} text-xs md:text-[16px] font-bold`}
+                >
                     {formatCurrency(price)}
                 </div>
             </div>
