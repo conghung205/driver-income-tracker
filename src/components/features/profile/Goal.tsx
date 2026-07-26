@@ -14,7 +14,7 @@ export default function Goal({ goal, openModal }: GoalProps) {
             <div className="p-5 bg-bg-secondary border border-bd-primary flex flex-col gap-4 rounded-2xl">
                 <div className="flex justify-between items-center mb-3">
                     <div>
-                        <h2 className="font-medium text-gray-200 text-[16px] md:text-lg">
+                        <h2 className="font-medium text-title text-[16px] md:text-lg">
                             Mục tiêu thu nhập hàng ngày
                         </h2>
                         <p className="text-desc text-sm">
@@ -25,7 +25,7 @@ export default function Goal({ goal, openModal }: GoalProps) {
                         <button
                             onClick={() => openModal()}
                             className="text-[10px] md:text-xs
-                             font-medium bg-main px-2 py-1 md:px-3 md:py-1.5 rounded-2xl text-gray-200 cursor-pointer hover:bg-main/90"
+                             font-medium bg-main px-2 py-1 md:px-3 md:py-1.5 rounded-2xl text-white cursor-pointer hover:bg-main/90"
                         >
                             Thay đổi chỉ tiêu
                         </button>
@@ -37,7 +37,7 @@ export default function Goal({ goal, openModal }: GoalProps) {
                         <h3 className="text-desc text-sm">
                             Mục tiêu đặt ra hàng ngày
                         </h3>
-                        <p className="mt-5 font-medium text-gray-200 text-lg">
+                        <p className="mt-5 font-medium text-title text-lg">
                             {formatCurrency(goal?.dailyGoal)}
                         </p>
                     </div>

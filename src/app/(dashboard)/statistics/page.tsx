@@ -39,8 +39,6 @@ export default function Statistics() {
         statisticsSummary?.expenseRatio ?? 0,
     );
 
-    console.log(statisticsSummary);
-
     return (
         <div className="p-6">
             <StatisticsHeader

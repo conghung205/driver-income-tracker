@@ -24,6 +24,7 @@ export default function HomePage() {
     return (
         <div className="p-6 ">
             {/* user */}
+
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-2xl font-semibold">Tổng quan tài chính</h2>
                 <div className="hidden md:flex md:mb-6">

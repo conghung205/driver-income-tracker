@@ -18,7 +18,7 @@ export default function TabItem({
             className={`py-4 cursor-pointer px-4 lg:px-8 text-xs md:text-sm font-semibold border-b  md:border-b-2 transition-all duration-200 relative ${
                 isActive
                     ? "border-main text-main"
-                    : "border-transparent text-desc hover:text-gray-200"
+                    : "border-transparent text-desc hover:text-desc"
             }`}
         >
             {tab.label}

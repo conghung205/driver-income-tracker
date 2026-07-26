@@ -21,7 +21,7 @@ export default function DashboardLayout({
             <main className="flex-1 h-full flex flex-col min-w-0 overflow-hidden md:pb-0">
                 <Header />
 
-                <div className="flex-1 overflow-y-auto pb-5 pt-18 md:p-0 text-white">
+                <div className="flex-1 overflow-y-auto pb-5 pt-18 md:p-0 text-title">
                     {children}
                 </div>
             </main>

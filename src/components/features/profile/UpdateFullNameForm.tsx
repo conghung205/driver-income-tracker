@@ -50,7 +50,7 @@ export default function UpdateFullNameForm({
                 </FieldLabel>
                 <Input
                     {...register("fullName")}
-                    className="border border-bd-primary py-5 text-white bg-bg-primary placeholder:text-desc"
+                    className="border border-bd-primary py-5 text-title bg-bg-primary placeholder:text-desc"
                     id="fullName"
                     placeholder="Nhập tên đầy đủ..."
                 />
@@ -64,7 +64,7 @@ export default function UpdateFullNameForm({
             <DialogFooter className="bg-bg-secondary mt-5 border-bd-primary">
                 <Button
                     type="submit"
-                    className="w-full cursor-pointer py-5 px-6 flex bg-main hover:bg-main/85 font-semibold"
+                    className="w-full text-white cursor-pointer py-5 px-6 flex bg-main hover:bg-main/85 font-semibold"
                 >
                     Lưu ngay
                 </Button>

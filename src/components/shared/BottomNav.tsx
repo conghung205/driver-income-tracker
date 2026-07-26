@@ -18,9 +18,9 @@ export default function BottomNav() {
                             <button
                                 onClick={() => setOpenModal(true)}
                                 key={item.href}
-                                className="bg-main -mt-6 p-3 text-white rounded-full shadow-lg"
+                                className="bg-main -mt-6 p-3 text-title rounded-full shadow-lg"
                             >
-                                <item.icon size={24} />
+                                <item.icon className="text-white" size={24} />
                             </button>
                         ) : (
                             <Link

@@ -17,8 +17,8 @@ export default function AppLogo({
             className={`flex flex-col items-center justify-center text-center ${className}`}
         >
             <Link href="/" className="flex items-center gap-2 group">
-                <div className="p-2 bg-main rounded-xl text-white group-hover:scale-105 transition-transform">
-                    <Car size={isMain ? 18 : 24} />
+                <div className="p-2 bg-main rounded-xl text-title group-hover:scale-105 transition-transform">
+                    <Car className="text-white" size={isMain ? 18 : 24} />
                 </div>
                 <span
                     className={`font-bold text-2xl ${isMain ? "text-[16px] text-start" : ""}  tracking-wider bg-linear-to-r from-emerald-800 to-emerald-300 bg-clip-text text-transparent`}

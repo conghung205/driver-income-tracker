@@ -6,7 +6,7 @@ export default function RevenueTooltip({ active, payload, label }: Props) {
 
     return (
         <div className="rounded-xl border border-bd-primary bg-bg-secondary p-3 shadow-xl">
-            <p className="mb-2 hidden md:block text-xs md:text-sm font-semibold text-white">
+            <p className="mb-2 hidden md:block text-xs md:text-sm font-semibold text-title">
                 {label}
             </p>
 
@@ -22,7 +22,7 @@ export default function RevenueTooltip({ active, payload, label }: Props) {
                         {item.name === "income" ? "Thu nhập" : "Chi phí"}
                     </span>
 
-                    <span className="font-medium text-sm md:text-[16px] text-white">
+                    <span className="font-medium text-sm md:text-[16px] text-title">
                         {Number(item.value).toLocaleString("vi-VN")} đ
                     </span>
                 </div>

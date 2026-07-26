@@ -19,7 +19,7 @@ export default function CategoryTooltip({ active, payload }: Props) {
                             {item.name}
                         </div>
 
-                        <div className="font-medium text-white">
+                        <div className="font-medium text-title">
                             {Number(item.value).toLocaleString("vi-VN")} đ
                         </div>
                     </div>

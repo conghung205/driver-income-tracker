@@ -91,7 +91,7 @@ export default function AddTransactionModal() {
     return (
         <Dialog open={isOpenModal} onOpenChange={setOpenModal}>
             <DialogTrigger asChild>
-                <Button className="cursor-pointer text-xs flex uppercase bg-main hover:bg-main/85 font-semibold">
+                <Button className="cursor-pointer text-white text-xs flex uppercase bg-main hover:bg-main/85 font-semibold">
                     <Plus size={22} />
                     Thêm giao dịch
                 </Button>
@@ -101,7 +101,7 @@ export default function AddTransactionModal() {
                 className="sm:max-w-sm p-5 bg-bg-secondary"
             >
                 <DialogHeader className="mb-5">
-                    <DialogTitle className="text-xl text-white text-center">
+                    <DialogTitle className="text-xl text-title text-center">
                         Thêm giao dịch mới
                     </DialogTitle>
                 </DialogHeader>
@@ -142,7 +142,7 @@ export default function AddTransactionModal() {
                                             allowNegative={false}
                                             placeholder="0"
                                             inputMode="numeric"
-                                            className="placeholder:text-desc text-white text-lg! placeholder:text-lg"
+                                            className="placeholder:text-desc text-title text-lg! placeholder:text-lg"
                                             id="money"
                                         />
                                         <InputGroupAddon
@@ -177,18 +177,19 @@ export default function AddTransactionModal() {
                                         onChange(val);
                                     }}
                                 >
-                                    <SelectTrigger className="w-full border text-white! bg-bg-primary py-5 focus:border-main border-bd-primary">
+                                    <SelectTrigger className="w-full border text-title! bg-bg-primary! py-5 focus:border-main border-bd-primary">
                                         <SelectValue placeholder="Chọn danh mục..." />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectGroup>
-                                            <SelectLabel>
+                                        <SelectGroup className="bg-bg-primary shadow-lg">
+                                            <SelectLabel className="text-title mb-2">
                                                 Chọn danh mục
                                             </SelectLabel>
                                             {categories.map((item) => (
                                                 <SelectItem
                                                     key={item.value}
                                                     value={item.value}
+                                                    className="hover:bg-bg-secondary!"
                                                 >
                                                     {item.label}
                                                 </SelectItem>
@@ -225,7 +226,7 @@ export default function AddTransactionModal() {
                             </FieldLabel>
                             <Input
                                 {...register("description")}
-                                className="border border-bd-primary py-5 text-white bg-bg-primary placeholder:text-desc"
+                                className="border border-bd-primary py-5 text-title bg-bg-primary placeholder:text-desc"
                                 id="description"
                                 placeholder="Ghi chú thêm..."
                             />
@@ -245,7 +246,7 @@ export default function AddTransactionModal() {
                         <Button
                             disabled={isPending}
                             type="submit"
-                            className="cursor-pointer py-5 px-6 flex bg-main hover:bg-main/85 font-semibold"
+                            className="cursor-pointer py-5 text-white px-6 flex bg-main hover:bg-main/85 font-semibold"
                         >
                             {isPending ? "Đang thêm..." : "Thêm nhanh"}
                         </Button>

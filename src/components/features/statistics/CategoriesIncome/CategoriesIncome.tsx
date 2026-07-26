@@ -33,7 +33,7 @@ export default function CategoriesIncome({
                 formattedData.map((c, index) => (
                     <div key={index} className="my-6">
                         <div className="flex justify-between mb-1">
-                            <span className="text-xs md:text-sm font-medium text-gray-300">
+                            <span className="text-xs md:text-sm font-medium text-desc">
                                 {c.label}
                             </span>
                             <span className="text-desc font-semibold text-sm md:text-[16px]">

@@ -32,7 +32,7 @@ export default function DialogConfirmDelete({
                 size="sm"
             >
                 <AlertDialogHeader>
-                    <AlertDialogTitle className="text-white/80">
+                    <AlertDialogTitle className="text-title/80">
                         Bạn có chắc chắn muốn xóa không?
                     </AlertDialogTitle>
                     <AlertDialogDescription className="text-desc">
@@ -42,7 +42,7 @@ export default function DialogConfirmDelete({
                 </AlertDialogHeader>
                 <AlertDialogFooter className="bg-bg-secondary border-t border-bd-primary">
                     <AlertDialogCancel
-                        className="bg-red-600 cursor-pointer text-white/80 border-0 hover:bg-red-500 hover:text-white"
+                        className="bg-red-600 cursor-pointer text-white border-0 hover:bg-red-500 hover:text-white"
                         disabled={isPending}
                         onClick={() => closeDeleteModal()}
                     >

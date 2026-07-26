@@ -47,7 +47,7 @@ export default function LoginForm() {
                 <InputGroup className="md:py-4 bg-bg-primary border-bd-primary ">
                     <InputGroupInput
                         {...register("phoneNumber")}
-                        className="md:text-[16px] text-white"
+                        className="md:text-[16px] text-title"
                         placeholder="Nhập số điện thoại của bạn..."
                         type="tel"
                     />
@@ -68,7 +68,7 @@ export default function LoginForm() {
                 <InputGroup className="md:py-4 bg-bg-primary border-bd-primary">
                     <InputGroupInput
                         {...register("password")}
-                        className="md:text-[16px] text-white"
+                        className="md:text-[16px] text-title"
                         placeholder="Nhập mật khẩu của bạn..."
                         type={showPassword ? "text" : "password"}
                     />
@@ -108,7 +108,7 @@ export default function LoginForm() {
             <Button
                 size="lg"
                 type="submit"
-                className="bg-main hover:bg-main/80 w-full text-lg py-5 cursor-pointer mt-2"
+                className="bg-main text-white hover:bg-main/80 w-full text-lg py-5 cursor-pointer mt-2"
             >
                 {isPending ? "Đang đăng nhập..." : "Đăng nhập"}
                 <ArrowRight />

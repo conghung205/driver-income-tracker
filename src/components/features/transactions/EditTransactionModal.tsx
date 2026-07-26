@@ -126,7 +126,7 @@ export default function EditTransactionModal() {
                     className="sm:max-w-sm p-5 bg-bg-secondary"
                 >
                     <DialogHeader className="mb-5">
-                        <DialogTitle className="text-xl text-white text-center">
+                        <DialogTitle className="text-xl text-title text-center">
                             Chỉnh sửa giao dịch
                         </DialogTitle>
                     </DialogHeader>
@@ -153,7 +153,7 @@ export default function EditTransactionModal() {
                                         >
                                             Số tiền
                                         </FieldLabel>
-                                        <InputGroup className="border bg-bg-primary border-bd-primary py-5">
+                                        <InputGroup className="border bg-bg-primary! border-bd-primary py-5">
                                             <NumericFormat
                                                 onBlur={onBlur}
                                                 value={
@@ -177,7 +177,7 @@ export default function EditTransactionModal() {
                                                 allowNegative={false}
                                                 placeholder="0"
                                                 inputMode="numeric"
-                                                className="placeholder:text-desc text-white text-lg! placeholder:text-lg"
+                                                className="placeholder:text-desc text-title text-lg! placeholder:text-lg"
                                                 id="money"
                                             />
                                             <InputGroupAddon
@@ -212,18 +212,19 @@ export default function EditTransactionModal() {
                                             onChange(val);
                                         }}
                                     >
-                                        <SelectTrigger className="w-full border text-white! bg-bg-primary py-5 focus:border-main border-bd-primary">
+                                        <SelectTrigger className="w-full border text-title! bg-bg-primary! py-5 focus:border-main! border-bd-primary">
                                             <SelectValue placeholder="Chọn danh mục..." />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectGroup>
-                                                <SelectLabel>
+                                            <SelectGroup className="bg-bg-primary shadow-lg">
+                                                <SelectLabel className="text-title mb-2">
                                                     Chọn danh mục
                                                 </SelectLabel>
                                                 {categories.map((item) => (
                                                     <SelectItem
                                                         key={item.value}
                                                         value={item.value}
+                                                        className="hover:bg-bg-secondary!"
                                                     >
                                                         {item.label}
                                                     </SelectItem>
@@ -266,7 +267,7 @@ export default function EditTransactionModal() {
                                 </FieldLabel>
                                 <Input
                                     {...register("description")}
-                                    className="border border-bd-primary py-5 text-white bg-bg-primary placeholder:text-desc"
+                                    className="border border-bd-primary py-5 text-title bg-bg-primary! placeholder:text-desc"
                                     id="description"
                                     placeholder="Ghi chú thêm..."
                                 />

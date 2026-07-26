@@ -30,7 +30,7 @@ export default function FormFieldModal({
                 className="sm:max-w-sm bg-bg-secondary border border-bd-primary"
             >
                 <DialogHeader className="pb-3">
-                    <DialogTitle className="text-gray-200 text-center text-xl">
+                    <DialogTitle className="text-title text-center text-xl">
                         {title}
                     </DialogTitle>
 

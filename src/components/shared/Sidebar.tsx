@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import AppLogo from "./AppLogo";
 import { useLogout } from "@/hooks/useAuth";
 import { LogOut } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Sidebar() {
     const { mutate: logout } = useLogout();
@@ -36,6 +37,10 @@ export default function Sidebar() {
             </div>
 
             <div className="py-5 border-t border-bd-primary">
+                <div className="px-4 pb-3.5">
+                    {" "}
+                    <ThemeToggle />
+                </div>
                 <div
                     onClick={() => logout()}
                     className="text-desc px-4 py-2 rounded-xl hover:text-red-500 transition-all duration-300 hover:bg-red-500/10 cursor-pointer flex items-center gap-2"

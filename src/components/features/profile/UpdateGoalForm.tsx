@@ -75,7 +75,7 @@ export default function UpdateGoalForm({
                                     allowNegative={false}
                                     placeholder="0"
                                     inputMode="numeric"
-                                    className="placeholder:text-desc text-white text-lg! placeholder:text-lg"
+                                    className="placeholder:text-desc text-title text-lg! placeholder:text-lg"
                                     id="money"
                                 />
                                 <InputGroupAddon
@@ -98,7 +98,7 @@ export default function UpdateGoalForm({
             <DialogFooter className="bg-bg-secondary mt-5 border-bd-primary">
                 <Button
                     type="submit"
-                    className="w-full cursor-pointer py-5 px-6 flex bg-main hover:bg-main/85 font-semibold"
+                    className="w-full text-white cursor-pointer py-5 px-6 flex bg-main hover:bg-main/85 font-semibold"
                 >
                     Lưu ngay
                 </Button>

@@ -46,16 +46,30 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --color-main: #10b981;
-  --color-desc: #94a3b8;
-  --color-bg-primary: #0f172a;
-  --color-bd-primary: #334155;
-  --color-header: #0A1628;
-  --color-bg-secondary: #1E293B;
-  --color-header-table: #172032;
+
+  /* styles color */
+  --color-main: var(--my-main);
+  --color-title: var(--my-title);
+  --color-desc: var(--my-desc);
+  --color-bg-primary: var(--my-bg-primary);
+  --color-bd-primary: var(--my-bd-primary);
+  --color-header: var(--my-header);
+  --color-bg-secondary: var(--my-bg-secondary);
+  --color-header-table: var(--my-header-table);
 }
 
 :root {
+  /* main */
+  --my-main: #10b981;          /* Màu xanh Emerald giữ nguyên hoặc đậm hơn chút cho sáng */
+  --my-desc: #464d53;          /* Slate-500: Chữ mô tả màu xám vừa phải */
+  --my-title: #313337;          /* Slate-500: Chữ mô tả màu xám vừa phải */
+  --my-bg-primary: #f8fafc;    /* Slate-50: Nền tổng thể trắng sáng sủa */
+  --my-bd-primary: #e2e8f0;    /* Slate-200: Viền nhạt màu */
+  --my-header: #ffffff;        /* Trắng tinh cho Header */
+  --my-bg-secondary: #ffffff;  /* Trắng tinh cho các Card, Chart box */
+  --my-header-table: #f1f5f9;  /* Slate-100: Nền header của table hơi xám nhẹ */
+
+  /* default */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -91,6 +105,16 @@
 }
 
 .dark {
+  --my-main: #10b981;
+  --my-desc: #94a3b8;
+  --my-title: #ebedf1;  
+  --my-bg-primary: #0f172a;
+  --my-bd-primary: #334155;
+  --my-header: #0A1628;
+  --my-bg-secondary: #1E293B;
+  --my-header-table: #172032;
+
+  /* default */
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -107,8 +131,8 @@
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --input: #0f172a;
+  --ring: oklch(69.588% 0.14907 162.508);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

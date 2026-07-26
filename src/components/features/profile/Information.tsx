@@ -11,7 +11,7 @@ export default function Information({ user, setModal }: InformationProps) {
         <div>
             {/* heading */}
             <div className="mb-5">
-                <h2 className="font-medium text-gray-200 text-[16px] md:text-lg">
+                <h2 className="font-medium text-title text-[16px] md:text-lg">
                     Thông tin cá nhân
                 </h2>
                 <p className="text-desc text-sm">
@@ -21,7 +21,7 @@ export default function Information({ user, setModal }: InformationProps) {
             {/* infomation */}
             <div className="p-5 bg-bg-secondary border border-bd-primary flex flex-col gap-4 rounded-2xl">
                 <div className="mb-3">
-                    <h2 className="font-medium text-gray-200 text-[16px] md:text-lg">
+                    <h2 className="font-medium text-title text-[16px] md:text-lg">
                         Thông tin tài khoản
                     </h2>
                     <p className="text-desc text-sm">
@@ -36,7 +36,7 @@ export default function Information({ user, setModal }: InformationProps) {
                 >
                     <div>
                         <div className="text-sm text-desc mb-2">Tên đầy đủ</div>
-                        <div className="font-medium text-sm md:text-[16px] text-gray-200">
+                        <div className="font-medium text-sm md:text-[16px] text-desc">
                             {user?.fullName}
                         </div>
                     </div>
@@ -52,7 +52,7 @@ export default function Information({ user, setModal }: InformationProps) {
                         <div className="text-sm text-desc mb-2">
                             Số điện thoại
                         </div>
-                        <div className="font-medium text-sm md:text-[16px] text-gray-200">
+                        <div className="font-medium text-sm md:text-[16px] text-desc">
                             {user?.phoneNumber}
                         </div>
                     </div>

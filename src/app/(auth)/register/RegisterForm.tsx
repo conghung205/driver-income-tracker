@@ -57,7 +57,7 @@ export default function RegisterForm() {
                 <FieldLabel className="text-desc">Tên đầy đủ:</FieldLabel>
                 <InputGroup className="md:py-4  bg-bg-primary border-bd-primary ">
                     <InputGroupInput
-                        className="md:text-[16px] text-white "
+                        className="md:text-[16px] text-title "
                         placeholder="Nhập tên đầy đủ của bạn..."
                         type="text"
                         {...register("fullName")}
@@ -77,7 +77,7 @@ export default function RegisterForm() {
                 <FieldLabel className="text-desc">Số điện thoại:</FieldLabel>
                 <InputGroup className="md:py-4 bg-bg-primary border-bd-primary">
                     <InputGroupInput
-                        className="md:text-[16px] text-white"
+                        className="md:text-[16px] text-title"
                         placeholder="Nhập số điện thoại của bạn..."
                         type="tel"
                         {...register("phoneNumber")}
@@ -98,7 +98,7 @@ export default function RegisterForm() {
                 <FieldLabel className="text-desc">Mật khẩu:</FieldLabel>
                 <InputGroup className="md:py-4 bg-bg-primary border-bd-primary">
                     <InputGroupInput
-                        className="md:text-[16px] text-white"
+                        className="md:text-[16px] text-title"
                         placeholder="Nhập mật khẩu của bạn..."
                         type={showPassword ? "text" : "password"}
                         {...register("password")}
@@ -138,7 +138,7 @@ export default function RegisterForm() {
                 </FieldLabel>
                 <InputGroup className="md:py-4 bg-bg-primary border-bd-primary">
                     <InputGroupInput
-                        className="md:text-[16px] text-white"
+                        className="md:text-[16px] text-title"
                         placeholder="Nhập lại mật khẩu..."
                         type="password"
                         {...register("confirmPassword")}
@@ -158,7 +158,7 @@ export default function RegisterForm() {
             <Button
                 size="lg"
                 type="submit"
-                className="bg-main hover:bg-main/80 w-full text-lg py-5 cursor-pointer mt-2"
+                className="bg-main text-white hover:bg-main/80 w-full text-lg py-5 cursor-pointer mt-2"
             >
                 {isPending ? "Đang đăng ký..." : "Đăng ký"}
                 <ArrowRight />

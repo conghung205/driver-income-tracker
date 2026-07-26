@@ -18,7 +18,9 @@ export default function StatisticsOutstandingItem({
 }: StatisticsOutstandingItemProps) {
     const style = VARIANT_STYLES[variant];
     return (
-        <div className={`p-3 md:p-5 bg-bg-primary rounded-2xl`}>
+        <div
+            className={`p-3 md:p-5 bg-bg-primary border border-bd-primary rounded-2xl`}
+        >
             <div className={`flex items-center justify-between gap-2 `}>
                 <div className="flex items-center gap-3">
                     <Icon

@@ -20,7 +20,7 @@ export default function HeaderProfile({ user }: HeaderProfileProps) {
                         loading="eager"
                     />
                     <div className="text-center md:text-start">
-                        <h2 className=" text-lg md:text-2xl text-gray-200 font-bold">
+                        <h2 className=" text-lg md:text-2xl text-title font-bold">
                             {user?.fullName}
                         </h2>
                         <p className="text-desc text-xs md:text-sm mt-2">
