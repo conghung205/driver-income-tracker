@@ -38,8 +38,8 @@ A full-stack web application that helps ride-hailing drivers manage their income
 | ![Dashboard](./public/images/dashboard.png) | ![Transactions](./public/images/transactions.png) |
 
 | Statistic                                   | Profile                                  |
-| ------------------------------------------- | ---------------------------------------- | --- |
-| ![Statistic](./public/images/statistic.png) | ![Profile](./public/images/profile2.png) |     |
+| ------------------------------------------- | ---------------------------------------- |
+| ![Statistic](./public/images/statistic.png) | ![Profile](./public/images/profile2.png) |
 
 | Dark Mode                                    | Mobile                                |
 | -------------------------------------------- | ------------------------------------- |
