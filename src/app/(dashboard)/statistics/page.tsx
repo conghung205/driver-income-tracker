@@ -13,6 +13,7 @@ import {
     useStatisticsSummary,
 } from "@/hooks/useStatistics";
 import { Package } from "lucide-react";
+import { Suspense } from "react";
 
 export default function Statistics() {
     const { setFilter, getFilter } = useFilter();
@@ -40,63 +41,75 @@ export default function Statistics() {
     );
 
     return (
-        <div className="p-6">
-            <StatisticsHeader
-                currentFilter={currentFilter}
-                onFilterChange={(value) => setFilter("range", value, false)}
-            />
+        <Suspense
+            fallback={
+                <div className="p-4 text-center">
+                    Đang tải dữ liệu thống kê...
+                </div>
+            }
+        >
+            <div className="p-6">
+                <StatisticsHeader
+                    currentFilter={currentFilter}
+                    onFilterChange={(value) => setFilter("range", value, false)}
+                />
 
-            {/* card kpi */}
-            {isLoading ? (
-                <div className="text-desc my-4">loading...</div>
-            ) : (
-                <div className="mt-5 flex flex-col gap-4 md:flex-row ">
-                    {kpiConfig.map((item) => (
+                {/* card kpi */}
+                {isLoading ? (
+                    <div className="text-desc my-4">loading...</div>
+                ) : (
+                    <div className="mt-5 flex flex-col gap-4 md:flex-row ">
+                        {kpiConfig.map((item) => (
+                            <KpiCard
+                                key={item.key}
+                                title={item.title}
+                                Icon={item.Icon}
+                                description={item.description}
+                                price={statisticsSummary?.[item.key] ?? 0}
+                                variant={item.variant}
+                            />
+                        ))}
                         <KpiCard
-                            key={item.key}
-                            title={item.title}
-                            Icon={item.Icon}
-                            description={item.description}
-                            price={statisticsSummary?.[item.key] ?? 0}
-                            variant={item.variant}
+                            title={"Tổng giao dịch"}
+                            Icon={Package}
+                            hasTotal
+                            total={statisticsSummary?.totalCount}
+                            variant={"success"}
+                            description="Tất cả các giao dịch của bạn"
                         />
-                    ))}
-                    <KpiCard
-                        title={"Tổng giao dịch"}
-                        Icon={Package}
-                        hasTotal
-                        total={statisticsSummary?.totalCount}
-                        variant={"success"}
-                        description="Tất cả các giao dịch của bạn"
-                    />
-                </div>
-            )}
-
-            {/* revenue & categories EXPENSE chart */}
-            <div className="mt-12 flex flex-col lg:flex-row gap-5">
-                {statisticsRevenueChart?.chart && (
-                    <RevenueChart revenues={statisticsRevenueChart?.chart} />
+                    </div>
                 )}
-                {statisticsCategoriesExpense?.categories && (
-                    <CategoriesChart
-                        categories={statisticsCategoriesExpense?.categories}
-                        totalAmount={statisticsCategoriesExpense.totalAmount}
-                    />
-                )}
-            </div>
 
-            <div className="mt-5 flex flex-col lg:flex-row gap-5">
-                <div className=" w-full lg:w-[30%]">
-                    <CategoriesIncome
-                        categories={statisticsCategoriesIncome?.categories}
-                    />
+                {/* revenue & categories EXPENSE chart */}
+                <div className="mt-12 flex flex-col lg:flex-row gap-5">
+                    {statisticsRevenueChart?.chart && (
+                        <RevenueChart
+                            revenues={statisticsRevenueChart?.chart}
+                        />
+                    )}
+                    {statisticsCategoriesExpense?.categories && (
+                        <CategoriesChart
+                            categories={statisticsCategoriesExpense?.categories}
+                            totalAmount={
+                                statisticsCategoriesExpense.totalAmount
+                            }
+                        />
+                    )}
                 </div>
-                <div className="flex-1">
-                    <StatisticsOutstanding
-                        statisticsSummary={statisticsSummary}
-                    />
+
+                <div className="mt-5 flex flex-col lg:flex-row gap-5">
+                    <div className=" w-full lg:w-[30%]">
+                        <CategoriesIncome
+                            categories={statisticsCategoriesIncome?.categories}
+                        />
+                    </div>
+                    <div className="flex-1">
+                        <StatisticsOutstanding
+                            statisticsSummary={statisticsSummary}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </Suspense>
     );
 }
