@@ -31,8 +31,6 @@ A full-stack web application that helps ride-hailing drivers manage their income
 
 # 📸 Screenshots
 
-> Add screenshots here.
-
 | Dashboard                                   | Transactions                                      |
 | ------------------------------------------- | ------------------------------------------------- |
 | ![Dashboard](./public/images/dashboard.png) | ![Transactions](./public/images/transactions.png) |
