@@ -2,6 +2,7 @@ import BottomNav from "@/components/shared/BottomNav";
 import Header from "@/components/shared/Header";
 import Sidebar from "@/components/shared/Sidebar";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
     title: "Tổng Quan",
@@ -22,7 +23,13 @@ export default function DashboardLayout({
                 <Header />
 
                 <div className="flex-1 overflow-y-auto pb-5 pt-18 md:p-0 text-title">
-                    {children}
+                    <Suspense
+                        fallback={
+                            <div className="p-4 text-center">Đang tải...</div>
+                        }
+                    >
+                        {children}
+                    </Suspense>
                 </div>
             </main>
 
