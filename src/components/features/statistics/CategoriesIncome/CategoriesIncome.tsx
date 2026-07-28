@@ -55,11 +55,11 @@ export default function CategoriesIncome({
                 ))
             ) : (
                 <div className="flex flex-col items-center justify-center text-center p-6 space-y-3">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center text-slate-500">
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center text-desc">
                         <WalletMinimal className="w-6 h-6" />
                     </div>
                     <div className="space-y-1">
-                        <p className="text-sm font-medium text-slate-300">
+                        <p className="text-sm font-medium text-desc">
                             Chưa có nguồn thu
                         </p>
                         <p className="text-xs text-slate-500 max-w-62.5">

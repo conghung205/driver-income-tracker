@@ -8,9 +8,13 @@ export const updateUserSchema = z
             .optional(),
 
         fullName: z.string().min(2, "Full name is too short").optional(),
+        avatarUrl: z.string().url("Invalid URL").optional(),
     })
     .refine(
-        (data) => data.phoneNumber !== undefined || data.fullName !== undefined,
+        (data) =>
+            data.phoneNumber !== undefined ||
+            data.fullName !== undefined ||
+            data.avatarUrl !== undefined,
         {
             message: "At least one field is required.",
         },

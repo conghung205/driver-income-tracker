@@ -19,9 +19,9 @@ export default function StatisticsHeader({
 }: StatisticsHeaderProps) {
     return (
         <div className="flex justify-between items-center">
-            <div className="mb-6">
+            <div className="mb-6 w-2/3 md:w-auto">
                 <h2 className="text-2xl font-semibold">Thống kê</h2>
-                <p className="text-sm text-desc">
+                <p className="text-sm  text-desc">
                     Theo dõi tình hình thu nhập và chi phí của bạn
                 </p>
             </div>

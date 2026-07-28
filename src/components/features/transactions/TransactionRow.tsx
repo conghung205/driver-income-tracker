@@ -7,6 +7,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { TableCell, TableRow } from "@/components/ui/table";
 import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
     CATEGORY_CONFIG,
     PAYMENTMETHOD_CONFIG,
     STATUS_CONFIG,
@@ -86,20 +91,34 @@ export default function TransactionRow({
                     </div>
                 </TableCell>
                 <TableCell className="text-desc hidden lg:table-cell">
-                    <button
-                        onClick={handleClickEditModal}
-                        className="p-2 cursor-pointer hover:text-main"
-                    >
-                        <Pencil size={20} />
-                    </button>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <button
+                                onClick={handleClickEditModal}
+                                className="p-2 cursor-pointer hover:text-main"
+                            >
+                                <Pencil size={20} />
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Sửa giao dịch</p>
+                        </TooltipContent>
+                    </Tooltip>
                 </TableCell>
                 <TableCell className="text-desc hidden lg:table-cell">
-                    <button
-                        onClick={() => openConfirmModal(item.id)}
-                        className="p-2 cursor-pointer hover:text-red-500"
-                    >
-                        <Trash2 size={20} />
-                    </button>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <button
+                                onClick={() => openConfirmModal(item.id)}
+                                className="p-2 cursor-pointer hover:text-red-500"
+                            >
+                                <Trash2 size={20} />
+                            </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Xóa giao dịch</p>
+                        </TooltipContent>
+                    </Tooltip>
                 </TableCell>
 
                 {/* options when tablet */}

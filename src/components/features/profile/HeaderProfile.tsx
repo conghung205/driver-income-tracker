@@ -11,14 +11,19 @@ export default function HeaderProfile({ user }: HeaderProfileProps) {
         <div className="p-6 bg-bg-secondary border border-bd-primary rounded-2xl">
             <div className="flex justify-between items-center">
                 <div className="flex flex-col md:flex-row justify-center md:justify-start w-full md:w-auto items-center gap-4">
-                    <Image
-                        className="rounded-full"
-                        alt="avatar-user"
-                        src={`/images/avatar-not-found.avif`}
-                        width={80}
-                        height={80}
-                        loading="eager"
-                    />
+                    <div>
+                        <Image
+                            className="rounded-full h-20 object-cover"
+                            alt="avatar-user"
+                            src={
+                                user?.avatarUrl ||
+                                `/images/avatar-not-found.avif`
+                            }
+                            width={80}
+                            height={80}
+                            loading="eager"
+                        />
+                    </div>
                     <div className="text-center md:text-start">
                         <h2 className=" text-lg md:text-2xl text-title font-bold">
                             {user?.fullName}

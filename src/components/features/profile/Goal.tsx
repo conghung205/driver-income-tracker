@@ -69,7 +69,7 @@ export default function Goal({ goal, openModal }: GoalProps) {
                     </div>
 
                     {/* container progress */}
-                    <div className="w-full relative bg-bg-secondary h-3 rounded-full overflow-hidden">
+                    <div className="w-full relative bg-bg-secondary h-3 border rounded-full overflow-hidden">
                         {/* progress fill */}
                         <div
                             className="h-full bg-main"

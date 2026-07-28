@@ -12,14 +12,17 @@ import UpdateFullNameForm from "@/components/features/profile/UpdateFullNameForm
 import UpdatePhoneForm from "@/components/features/profile/UpdatePhoneForm";
 import UpdatePasswordForm from "@/components/features/profile/UpdatePasswordForm";
 import UpdateGoalForm from "@/components/features/profile/UpdateGoalForm";
+import UpdateAvatar from "@/components/features/profile/UpdateAvatar";
 
 export default function ProfilePage() {
     const { data: user } = useGetUser();
     const { data: goal } = useGetGoal();
     const [activeTab, setActiveTab] = useState("goal");
     const [modal, setModal] = useState<
-        "name" | "phone" | "goal" | "password" | null
+        "name" | "phone" | "goal" | "password" | "image" | null
     >(null);
+
+    console.log(user);
     return (
         <>
             <div className="w-full px-5 md:w-[80%] md:px-0 mx-auto py-5">
@@ -75,6 +78,20 @@ export default function ProfilePage() {
                     onsuccess={() => setModal(null)}
                     defaultValue={user?.phoneNumber}
                 />
+            </FormFieldModal>
+
+            {/* update image */}
+            <FormFieldModal
+                title="Chỉnh sửa ảnh đại diện"
+                open={modal === "image"}
+                onOpenChange={() => setModal(null)}
+            >
+                {user && (
+                    <UpdateAvatar
+                        user={user}
+                        onsuccess={() => setModal(null)}
+                    />
+                )}
             </FormFieldModal>
 
             {/* update password */}

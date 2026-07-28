@@ -11,6 +11,15 @@ export async function GET(request: NextRequest) {
     try {
         const user = await prisma.user.findUnique({
             where: { id: userId },
+            select: {
+                id: true,
+                phoneNumber: true,
+                fullName: true,
+                avatarUrl: true,
+                balance: true,
+                createdAt: true,
+                updatedAt: true,
+            },
         });
 
         if (!user) {
@@ -19,20 +28,11 @@ export async function GET(request: NextRequest) {
                 { status: 404 },
             );
         }
-        const { id, phoneNumber, fullName, balance, createdAt, updatedAt } =
-            user;
 
         return NextResponse.json(
             {
                 message: "Get user successfully.",
-                data: {
-                    id,
-                    phoneNumber,
-                    fullName,
-                    balance,
-                    createdAt,
-                    updatedAt,
-                },
+                data: user,
             },
             { status: 200 },
         );
@@ -75,10 +75,11 @@ export async function PATCH(request: NextRequest) {
             );
         }
 
-        const { phoneNumber, fullName } = result.data;
+        const { phoneNumber, fullName, avatarUrl } = result.data;
         const dataToUpdate: {
             fullName?: string;
             phoneNumber?: string;
+            avatarUrl?: string;
         } = {};
 
         if (fullName !== undefined) {
@@ -103,32 +104,28 @@ export async function PATCH(request: NextRequest) {
             }
             dataToUpdate.phoneNumber = phoneNumber;
         }
+        if (avatarUrl !== undefined) {
+            dataToUpdate.avatarUrl = avatarUrl;
+        }
 
         const newUser = await prisma.user.update({
             where: { id: userId },
             data: dataToUpdate,
+            select: {
+                id: true,
+                phoneNumber: true,
+                fullName: true,
+                avatarUrl: true,
+                balance: true,
+                createdAt: true,
+                updatedAt: true,
+            },
         });
-
-        const {
-            id,
-            phoneNumber: phone,
-            fullName: name,
-            balance,
-            createdAt,
-            updatedAt,
-        } = newUser;
 
         return NextResponse.json(
             {
                 message: "User information changed successfully.",
-                data: {
-                    id,
-                    phoneNumber: phone,
-                    fullName: name,
-                    balance,
-                    createdAt,
-                    updatedAt,
-                },
+                data: newUser,
             },
             { status: 200 },
         );

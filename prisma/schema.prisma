@@ -54,6 +54,7 @@ model User {
   fullName     String
   password     String
   balance      Int      @default(0)
+  avatarUrl    String?
   refreshToken String?
   dailyGoal    Int?
   createdAt    DateTime @default(now())

@@ -40,14 +40,14 @@ export default function KpiCard({
 
             {hasTotal ? (
                 <span
-                    className={` ${style.title} md:text-lg lg:text-2xl flex items-center`}
+                    className={` ${style.title} md:text-lg lg:text-2xl font-semibold md:mb-3 flex items-center`}
                 >
                     {total}{" "}
                     <span className="text-sm text-desc ml-2">giao dịch</span>
                 </span>
             ) : (
                 <span
-                    className={` ${style.title} md:text-lg lg:text-2xl flex items-center`}
+                    className={` ${style.title} md:text-lg lg:text-2xl font-semibold md:mb-3 flex items-center`}
                 >
                     {formatCurrency(price)}
                 </span>

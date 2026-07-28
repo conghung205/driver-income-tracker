@@ -1,9 +1,10 @@
 import { UserMe } from "@/types/user.type";
 import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 
 interface InformationProps {
     user: UserMe | undefined;
-    setModal(value: "name" | "phone"): void;
+    setModal(value: "name" | "phone" | "image"): void;
 }
 
 export default function Information({ user, setModal }: InformationProps) {
@@ -54,6 +55,40 @@ export default function Information({ user, setModal }: InformationProps) {
                         </div>
                         <div className="font-medium text-sm md:text-[16px] text-desc">
                             {user?.phoneNumber}
+                        </div>
+                    </div>
+                    <button>
+                        <ChevronRight size={24} />
+                    </button>
+                </div>
+
+                {/* avatar */}
+                <div
+                    onClick={() => setModal("image")}
+                    className="p-2 px-4 md:p-2.5 md:px-5 flex border border-bd-primary justify-between bg-bg-primary hover:bg-bg-primary/50 rounded-2xl"
+                >
+                    <div>
+                        <div className="text-sm text-desc mb-2">
+                            Ảnh đại diện
+                        </div>
+                        <div className="font-medium text-sm md:text-[16px] text-desc">
+                            {user?.avatarUrl ? (
+                                <Image
+                                    className="rounded-full h-[40px] object-cover"
+                                    alt="avatar"
+                                    src={user?.avatarUrl}
+                                    width={40}
+                                    height={40}
+                                />
+                            ) : (
+                                <Image
+                                    className="rounded-full h-[40px] object-cover"
+                                    alt="avatar"
+                                    src="/images/avatar-not-found.avif"
+                                    width={40}
+                                    height={40}
+                                />
+                            )}
                         </div>
                     </div>
                     <button>

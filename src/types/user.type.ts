@@ -5,6 +5,7 @@ export interface UserMe {
     balance: number;
     createdAt: string;
     updatedAt: string;
+    avatarUrl: string;
 }
 
 export interface UserMeResponse {
@@ -27,6 +28,7 @@ export interface UpdateGoal {
 export interface UpdateUser {
     fullName?: string;
     phoneNumber?: string;
+    avatarUrl?: string;
 }
 export interface UpdatePassword {
     currentPassword: string;

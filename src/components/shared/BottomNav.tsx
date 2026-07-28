@@ -11,7 +11,7 @@ export default function BottomNav() {
     const pathname = usePathname();
     return (
         <>
-            <nav className="flex bg-header md:hidden">
+            <nav className="flex bg-header border-t border-bd-primary shadow-2xl md:hidden">
                 <div className="px-5 flex w-full justify-between items-center">
                     {NAV_ITEMS.map((item) =>
                         item.isAction ? (

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import QueryProvider from "@/providers/QueryProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
     title: {
@@ -43,7 +44,9 @@ export default function RootLayout({
                 />
             </head>
             <body className="min-h-full flex flex-col">
-                <QueryProvider>{children}</QueryProvider>
+                <QueryProvider>
+                    <TooltipProvider>{children}</TooltipProvider>
+                </QueryProvider>
                 <Toaster position="top-right" richColors closeButton />
             </body>
         </html>
