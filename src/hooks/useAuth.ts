@@ -10,6 +10,7 @@ export const useLogin = () => {
     return useMutation({
         mutationFn: (data: LoginPayload) => authServices.login(data),
         onSuccess: () => {
+            router.refresh();
             router.push("/");
         },
         onError: (error: ApiError) => {
@@ -25,6 +26,7 @@ export const useRegister = () => {
     return useMutation({
         mutationFn: (data: RegisterPayload) => authServices.register(data),
         onSuccess: () => {
+            router.refresh();
             router.push("/");
         },
         onError: (error: ApiError) => {
