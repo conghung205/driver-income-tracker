@@ -11,7 +11,6 @@ export default function HomePage() {
     const { data, isLoading } = useDashboardSummary({ range: "today" });
     const { data: userData } = useGetUser();
     const { data: goal } = useGetGoal();
-    console.log(goal);
 
     const kpiConfig = getSummaryKpis(
         data?.incomeCount ?? 0,
