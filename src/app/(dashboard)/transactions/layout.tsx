@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
     title: "Lịch Sử Giao Dịch",
@@ -11,5 +12,17 @@ export default function TransactionsLayout({
 }: {
     children: React.ReactNode;
 }) {
-    return <>{children}</>;
+    return (
+        <>
+            <Suspense
+                fallback={
+                    <div className="p-4 text-center">
+                        Đang tải danh sách giao dịch...
+                    </div>
+                }
+            >
+                {children}
+            </Suspense>
+        </>
+    );
 }
