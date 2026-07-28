@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
+
 const axiosClient = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    baseURL: API_URL,
     headers: {
         "Content-Type": "application/json",
     },
@@ -56,7 +58,7 @@ axiosClient.interceptors.response.use(
             try {
                 // Use the native axios to call refresh, avoid calling axiosClient which causes a loop.
                 await axios.post(
-                    `${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`,
+                    `${API_URL}/auth/refresh`,
                     {},
                     { withCredentials: true },
                 );
